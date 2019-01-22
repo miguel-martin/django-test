@@ -1,0 +1,16 @@
+2019-01-22 18:54:35.841 CET [68504] LOG:  listening on IPv6 address "::1", port 5432
+2019-01-22 18:54:35.841 CET [68504] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-01-22 18:54:35.842 CET [68504] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-01-22 18:54:35.853 CET [68505] LOG:  database system was shut down at 2019-01-22 18:54:09 CET
+2019-01-22 18:54:35.856 CET [68504] LOG:  database system is ready to accept connections
+2019-01-22 18:55:42.659 CET [68517] FATAL:  database "miguel" does not exist
+2019-01-22 18:56:51.342 CET [68521] ERROR:  role "miguel" already exists
+2019-01-22 18:56:51.342 CET [68521] STATEMENT:  CREATE USER miguel WITH PASSWORD 'miguel';
+2019-01-22 18:57:58.977 CET [68521] ERROR:  invalid value for parameter "default_transaction_isolation": "read commited"
+2019-01-22 18:57:58.977 CET [68521] HINT:  Available values: serializable, repeatable read, read committed, read uncommitted.
+2019-01-22 18:57:58.977 CET [68521] STATEMENT:  ALTER ROLE django SET default_transaction_isolation TO 'read commited';
+2019-01-22 19:00:36.192 CET [68504] LOG:  received fast shutdown request
+2019-01-22 19:00:36.197 CET [68504] LOG:  aborting any active transactions
+2019-01-22 19:00:36.198 CET [68504] LOG:  background worker "logical replication launcher" (PID 68511) exited with exit code 1
+2019-01-22 19:00:36.198 CET [68506] LOG:  shutting down
+2019-01-22 19:00:36.204 CET [68504] LOG:  database system is shut down
