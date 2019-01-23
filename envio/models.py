@@ -13,10 +13,10 @@ class Centro(models.Model):
         ('A', 'LA ALMUNIA')
     )
 
-    cid = models.IntegerField(primary_key=True)
+    cid = models.IntegerField('Codigo de Centro', primary_key=True)
     nombre = models.CharField(max_length=250)
     localidad = models.CharField(max_length=1, choices=LOCALIDADES_CHOICES, default='-')
-    url = models.URLField(default='http://unizar.es')
+    url = models.URLField('Página web del centro', default='http://unizar.es')
 
     def __str__(self):
         return(self.nombre)
@@ -28,7 +28,7 @@ class Estudio(models.Model):
         (5, 'Grado'),
         (6, 'Máster'),
     )
-	eid = models.IntegerField(primary_key=True)
+	eid = models.IntegerField('Código de Estudio', primary_key=True)
 	nombre = models.CharField(max_length=250)
 	tipo = models.IntegerField(choices=TIPOS_ESTUDIO_CHOICES)
 	centros = models.ManyToManyField(Centro, through='Plan', default=5)
@@ -44,7 +44,7 @@ class Plan(models.Model):
     	('2018', '2018/2019'),
     )
 
-    pid = models.IntegerField()
+    pid = models.IntegerField('Código de Plan')
     curso = models.CharField(max_length=4, choices=CURSOS_CHOICES) 
     estudio = models.ForeignKey(Estudio, on_delete=models.CASCADE)
     centro = models.ForeignKey(Centro, on_delete=models.CASCADE)

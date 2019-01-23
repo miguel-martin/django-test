@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 from envio.models import Centro, Estudio, Plan
 
@@ -28,11 +28,11 @@ def list_centro(request, id):
 
 def edit_centro(request, id):
 	""" Edita el centro id, si existe """
-	pass
+	return HttpResponseRedirect('/admin/envio/centro/{}/change'.format(id))
 
-def delete_centro(request, id):
-	""" Borra el centro id, si existe """
-	pass 	
+#def delete_centro(request, id):
+#	""" Borra el centro id, si existe """
+#	pass 	
 
 def list_all_estudios(request):
 	""" Muestra informacion de todos los estudios """
@@ -52,11 +52,11 @@ def list_estudio(request, id):
 
 def edit_estudio(request, id):
 	""" Edita el estudio id, si existe """
-	pass
+	return HttpResponseRedirect('/admin/envio/estudio/{}/change'.format(id))
 
-def delete_estudio(request, id):
-	""" Borra el estudio id, si existe """
-	pass
+#def delete_estudio(request, id):
+#	""" Borra el estudio id, si existe """
+#	pass
 
 def list_all_planes(request):
 	""" Muestra informacion de todos los planes """
