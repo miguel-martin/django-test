@@ -1,4 +1,4 @@
-from envio.models import Centro
+from envio.models import Centro, Estudio, Plan
 
 centros = [  
     Centro(100, 'Facultad de Ciencias','Z'),
@@ -14,3 +14,23 @@ centros = [
 
 for c in centros:
     c.save()
+
+estudios = [
+	Estudio(134, 'Graduado en Finanzas y Contabilidad', 5),
+	Estudio(157, 'Graduado en Estudios en Arquitectura', 5),
+	Estudio(148, 'Graduado en Ingeniería Informática', 5),
+]
+
+for e in estudios:
+    e.save()
+
+
+planes = [
+	Plan(pid=449, curso='2018', estudio=Estudio.objects.get(eid=134), centro=Centro.objects.get(cid=109)),
+	Plan(pid=470, curso='2018', estudio=Estudio.objects.get(eid=157), centro=Centro.objects.get(cid=110)),
+	Plan(pid=439, curso='2018', estudio=Estudio.objects.get(eid=148), centro=Centro.objects.get(cid=110)),
+	Plan(pid=443, curso='2018', estudio=Estudio.objects.get(eid=148), centro=Centro.objects.get(cid=326)),
+]
+
+for p in planes:
+    p.save()

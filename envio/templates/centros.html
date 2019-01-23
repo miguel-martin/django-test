@@ -8,6 +8,7 @@
 {%endblock %}
 
 {% block content %}
+{% if centros %}
 <table class="table table-striped">
   <thead>
   	<tr>
@@ -29,4 +30,5 @@
 {% endfor %}
 </table>
 </div>
+{% endif %}
 {% endblock %}

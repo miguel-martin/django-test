@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+    <h1> INFORMACIÓN DE ESTUDIOS </h1>
+    {% if eid %}
+    	<h2>ESTUDIO {{ eid }}</h2>
+    {% endif %}
+{%endblock %}
+
+{% block content %}
+{% if estudios %}
+    <table class="table table-striped">
+      <thead>
+      	<tr>
+      	  <th>CÓDIGO ESTUDIO</th>
+      	  <th>NOMBRE ESTUDIO</th>
+      	  <th>TIPO</th>
+      	  <th>CENTROS</th>
+      	</tr>
+      </thead>
+    {% for e in estudios %}
+        <tr>
+        	<td>{{ e.eid }} </td>
+        	<td><a href="/estudios/{{ e.eid }}">{{ e.nombre}}</a> </td>
+        	<td>{{ e.get_tipo_display }} </td>
+        	<td>{% for centro in e.centros.all %} <a href="/centros/{{ centro.cid }}">{{ centro.nombre }}</a><br /> {% endfor %}</td>
+        	<td><a href="/estudios/{{ c.cid }}/editar">EDITAR</a> - <a href="/estudios/{{ c.cid }}/borrar">BORRAR</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+    </div>
+{% endif %}
+{% endblock %}
