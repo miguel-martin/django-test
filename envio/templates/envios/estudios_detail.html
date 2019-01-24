@@ -1,5 +1,9 @@
 {% extends "envios/base.html" %}
 
+<!-- for debugging purposes -->
+<textarea onclick="this.focus();this.select()" style="width: 100%;"> {% filter force_escape %} {% debug %} {% endfilter %}</textarea>
+<!-- ToDo: delete -->
+
 {% block titulo %}
     <h1> {{ estudio.nombre }} </h1>
 {% endblock %}

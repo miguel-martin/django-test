@@ -3,7 +3,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from envio.models import Centro, Estudio, Plan
 from django.views import generic
 
-# Create your views here.
 
 
 def index(request):
@@ -66,3 +65,4 @@ def list_plan(request, id):
 def edit_plan(request, id):
 	""" Edita el plan id, si existe """
 	return HttpResponseRedirect('/admin/envio/plan/{}/change/'.format(id))
+
