@@ -3,7 +3,7 @@
 {% block titulo %}
     <h1> INFORMACIÓN DE PLANES </h1>
     {% if pid %}
-    	<h2>PLAN {{ pid }}</h2>
+      <h2>PLAN {{ pid }}</h2>
     {% endif %}
 {%endblock %}
 
@@ -11,21 +11,21 @@
 {% if planes %}
     <table class="table table-striped">
       <thead>
-      	<tr>
-      	  <th>CÓDIGO PLAN</th>
-      	  <th>CURSO</th>
-      	  <th>ESTUDIO</th>
-      	  <th>CENTRO</th>
+        <tr>
+          <th>CÓDIGO PLAN</th>
+          <th>CURSO</th>
+          <th>ESTUDIO</th>
+          <th>CENTRO</th>
           <th>OPERACIONES</th>
-      	</tr>
+        </tr>
       </thead>
     {% for p in planes %}
         <tr>
-        	<td><a href="/planes/{{ p.pid }}">{{ p.pid}}</a> </td>
-        	<td>{{ p.get_curso_display }}</td>
-        	<td><a href="/estudios/{{ p.estudio.eid }}">{{ p.estudio.nombre }}</a> </td>
-        	<td><a href="/centros/{{ p.centro.cid }}">{{ p.centro.nombre }}</a></td>
-          <td><a href="/planes/{{ p.pid }}/editar">EDITAR</a></td>
+          <td><a href="{% url 'list_plan' p.pid %}">{{ p.pid}}</a> </td>
+          <td>{{ p.get_curso_display }}</td>
+          <td><a href="{% url 'list_estudio' p.estudio.eid %}">{{ p.estudio.nombre }}</a> </td>
+          <td><a href="{% url 'list_centro' p.centro.cid %}">{{ p.centro.nombre }}</a></td>
+          <td><a href="{% url 'edit_plan' p.pid %}">EDITAR</a></td>
         </tr>
     {% endfor %}
     </table>
