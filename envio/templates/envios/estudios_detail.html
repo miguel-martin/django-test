@@ -1,0 +1,32 @@
+{% extends "envios/base.html" %}
+
+{% block titulo %}
+    <h1> {{ estudio.nombre }} </h1>
+{% endblock %}
+
+{% block content %}
+<table class="table table-striped">
+    <tbody>
+        <tr>
+          <th>Nombre de estudio</th>
+            <td>{{ estudio.nombre }}</td>
+        </tr>
+        <tr>
+          <th>Código de estudio</th>
+            <td>{{ estudio.eid }}</td>
+        </tr>
+        <tr>
+          <th>Impartido en:</th>
+          <td>
+          {% for centro in estudio.centros.all %}
+            <a href="{% url 'list_centro' centro.cid %}">{{ centro }}</a><br />
+          {% endfor %}
+          </td>
+        </tr>
+        <tr>
+          <th>+INFO (link externo):</th>
+            <td><a href="https://estudios.unizar.es/estudio/ver?id={{ estudio.eid }}">Ver en web de ESTUDIOS</a></td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

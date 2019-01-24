@@ -1,0 +1,30 @@
+{% extends "envios/base.html" %}
+
+{% block titulo %}
+    <h1> INFORMACIÓN DE ESTUDIOS </h1>
+{%endblock %}
+
+{% block content %}
+    <table class="table table-striped">
+      <thead>
+      	<tr>
+      	  <th>CÓDIGO ESTUDIO</th>
+      	  <th>NOMBRE ESTUDIO</th>
+      	  <th>TIPO</th>
+      	  <th>CENTROS</th>
+      	</tr>
+      </thead>
+    {% for e in estudios %}
+        <tr>
+        	<td>{{ e.eid }} </td>
+        	<td><a href="{% url 'list_estudio' e.eid %}">{{ e.nombre}}</a> </td>
+        	<td>{{ e.get_tipo_display }} </td>
+        	<td>
+              {% for centro in e.centros.all %} 
+                    <a href="{% url 'list_centro' centro.cid %}">{{ centro.nombre }}</a><br /> 
+              {% endfor %}
+          </td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

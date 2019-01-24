@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
-
 from envio.models import Centro, Estudio, Plan
+from django.views import generic
 
 # Create your views here.
 
@@ -29,16 +29,20 @@ def edit_centro(request, id):
 #	""" Borra el centro id, si existe """
 #	pass 	
 
-def list_all_estudios(request):
+class EstudioIndexView(generic.ListView):
 	""" Muestra informacion de todos los estudios """
-	estudios = Estudio.objects.all()
-	return render(request, 'envios/estudios.html', {'estudios': estudios})
+	template_name = 'envios/estudios_index.html'
+	context_object_name = 'estudios'
 
-def list_estudio(request, id):
-	""" Lista el estudio id, si existe """ 
-	eid = int(id)
-	estudio = get_object_or_404(Estudio, eid=eid)
-	return render(request, 'envios/estudios.html', {'eid': eid, 'estudios':[estudio]})
+	def get_queryset(self):
+		""" Genera el listado de todos estudios """
+		return Estudio.objects.order_by('eid')
+	
+
+class EstudioDetailView(generic.DetailView):
+	""" Lista el esudio id, si existe """
+	model = Estudio
+	template_name = 'envios/estudios_detail.html'
 
 def edit_estudio(request, id):
 	""" Edita el estudio id, si existe """
