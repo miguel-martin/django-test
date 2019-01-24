@@ -44,7 +44,7 @@ class Plan(models.Model):
     	('2018', '2018/2019'),
     )
 
-    pid = models.IntegerField('Código de Plan')
+    pid = models.IntegerField('Código de Plan', primary_key=True)
     curso = models.CharField(max_length=4, choices=CURSOS_CHOICES) 
     estudio = models.ForeignKey(Estudio, on_delete=models.CASCADE)
     centro = models.ForeignKey(Centro, on_delete=models.CASCADE)

@@ -16,6 +16,7 @@
       	  <th>CURSO</th>
       	  <th>ESTUDIO</th>
       	  <th>CENTRO</th>
+          <th>OPERACIONES</th>
       	</tr>
       </thead>
     {% for p in planes %}
@@ -24,6 +25,7 @@
         	<td>{{ p.get_curso_display }}</td>
         	<td><a href="/estudios/{{ p.estudio.eid }}">{{ p.estudio.nombre }}</a> </td>
         	<td><a href="/centros/{{ p.centro.cid }}">{{ p.centro.nombre }}</a></td>
+          <td><a href="/planes/{{ p.pid }}/editar">EDITAR</a></td>
         </tr>
     {% endfor %}
     </table>

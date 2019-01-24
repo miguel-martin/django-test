@@ -73,3 +73,7 @@ def list_plan(request, id):
 		avisos = "El plan {} no existe".format(eid)
 	finally:
 		return render(request, 'planes.html', locals())
+
+def edit_plan(request, id):
+	""" Edita el plan id, si existe """
+	return HttpResponseRedirect('/admin/envio/plan/{}/change/'.format(id))
