@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 
 from envio.models import Centro, Estudio, Plan
@@ -13,18 +13,13 @@ def index(request):
 def list_all_centros(request):
 	""" Muestra informacion de todos los centros """
 	centros = Centro.objects.all()
-	return render(request, 'centros.html', {'centros': centros})
+	return render(request, 'envios/centros.html', {'centros': centros})
 	
 def list_centro(request, id):
 	""" Lista el centro id, si existe """ 
 	cid = int(id)
-	try:
-	    centros = [Centro.objects.get(cid=int(id))]
-	except Centro.DoesNotExist:
-		centros = []
-		avisos = "El centro no {} existe".format(cid)
-	finally:
-		return render(request, 'centros.html', locals())
+	centro = get_object_or_404(Centro, cid=cid)	
+	return render(request, 'envios/centros.html', {'cid': cid, 'centros': [centro]})
 
 def edit_centro(request, id):
 	""" Edita el centro id, si existe """
@@ -37,18 +32,13 @@ def edit_centro(request, id):
 def list_all_estudios(request):
 	""" Muestra informacion de todos los estudios """
 	estudios = Estudio.objects.all()
-	return render(request, 'estudios.html', {'estudios': estudios})
+	return render(request, 'envios/estudios.html', {'estudios': estudios})
 
 def list_estudio(request, id):
 	""" Lista el estudio id, si existe """ 
 	eid = int(id)
-	try:
-	    estudios = [Estudio.objects.get(eid=int(id))]
-	except Estudio.DoesNotExist:
-		estudios = []
-		avisos = "El estudio {} no existe".format(eid)
-	finally:
-		return render(request, 'estudios.html', locals())
+	estudio = get_object_or_404(Estudio, eid=eid)
+	return render(request, 'envios/estudios.html', {'eid': eid, 'estudios':[estudio]})
 
 def edit_estudio(request, id):
 	""" Edita el estudio id, si existe """
@@ -61,18 +51,13 @@ def edit_estudio(request, id):
 def list_all_planes(request):
 	""" Muestra informacion de todos los planes """
 	planes = Plan.objects.all()
-	return render(request, 'planes.html', {'planes': planes})
+	return render(request, 'envios/planes.html', {'planes': planes})
 
 def list_plan(request, id):
 	""" Lista el plan id, si existe """ 
 	pid = int(id)
-	try:
-	    planes = [Plan.objects.get(pid=int(id))]
-	except Plan.DoesNotExist:
-		planes = []
-		avisos = "El plan {} no existe".format(eid)
-	finally:
-		return render(request, 'planes.html', locals())
+	plan = get_object_or_404(Plan, pid=pid)
+	return render(request, 'envios/planes.html', {'pid': pid, 'planes': [plan]})
 
 def edit_plan(request, id):
 	""" Edita el plan id, si existe """
