@@ -11,7 +11,7 @@ def index(request):
 
 class CentroIndexView(generic.ListView):
 	""" Muestra informacion de todos los centros """
-	template_name = 'envios/centros_index.html'
+	template_name = 'envio/centros_index.html'
 	context_object_name = 'centros'
 
 	def get_queryset(self):
@@ -21,7 +21,7 @@ class CentroIndexView(generic.ListView):
 class CentroDetailView(generic.DetailView):
 	""" Lista el centro id, si existe """ 
 	model = Centro
-	template_name = 'envios/centro_detail.html'
+	template_name = 'envio/centro_detail.html'
 
 def edit_centro(request, id):
 	""" Edita el centro id, si existe """
@@ -29,7 +29,7 @@ def edit_centro(request, id):
 
 class EstudioIndexView(generic.ListView):
 	""" Muestra informacion de todos los estudios """
-	template_name = 'envios/estudios_index.html'
+	template_name = 'envio/estudios_index.html'
 	context_object_name = 'estudios'
 
 	def get_queryset(self):
@@ -39,7 +39,7 @@ class EstudioIndexView(generic.ListView):
 class EstudioDetailView(generic.DetailView):
 	""" Lista el esudio id, si existe """
 	model = Estudio
-	template_name = 'envios/estudios_detail.html'
+	template_name = 'envio/estudio_detail.html'
 
 def edit_estudio(request, id):
 	""" Edita el estudio id, si existe """
@@ -47,7 +47,7 @@ def edit_estudio(request, id):
 
 class PlanIndexView(generic.ListView):
 	""" Muestra informacion de todos los planes """
-	template_name = 'envios/plan_index.html'
+	template_name = 'envio/plan_index.html'
 	context_object_name = 'planes'
 
 	def get_queryset(self):
@@ -57,7 +57,7 @@ class PlanIndexView(generic.ListView):
 class PlanDetailView(generic.DetailView):
 	""" Lista el plan id, si existe """ 
 	model = Plan
-	template_name = 'envios/plan_detail.html'
+	template_name = 'envio/plan_detail.html'
 
 def edit_plan(request, id):
 	""" Edita el plan id, si existe """

@@ -1,4 +1,4 @@
-{% extends "envios/base.html" %}
+{% extends "envio/base.html" %}
 
 {% block titulo %}
     <h1> INFORMACIÓN DE PLANES </h1>
@@ -27,5 +27,7 @@
     {% endfor %}
     </table>
     </div>
+{% else %}
+    <p>No hay planes en la base de datos.</p>
 {% endif %}
 {% endblock %}
