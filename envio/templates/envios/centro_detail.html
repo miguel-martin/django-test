@@ -1,0 +1,40 @@
+{% extends "envios/base.html" %}
+
+{% block titulo %}
+    <h1> {{ centro.nombre }} </h1>
+{% endblock %}
+
+{% block content %}
+<!-- for debugging purposes -->
+<textarea onclick="this.focus();this.select()" style="width: 100%;"> 
+    {% filter force_escape %} {% debug %} {% endfilter %}
+</textarea>
+<!-- ToDo: delete -->
+
+<table class="table table-striped">
+    <tbody>
+        <tr>
+          <th>Nombre de centro</th>
+            <td>{{ centro.nombre }}</td>
+        </tr>
+        <tr>
+          <th>Localidad</th>
+            <td>{{ centro.get_localidad_display }}</td>
+        </tr>
+        <tr>
+          <th>URL</th>
+          <td>
+          {{ centro.url }}
+          </td>
+        </tr>
+        <tr>
+          <th>Estudios</th>
+            <td>
+              {% for plan in centro.plan_set.all %}
+                  <a href="{% url 'list_estudio' plan.estudio.eid %}">{{ plan.estudio.nombre }}</a> - <a href="{% url 'list_plan' plan.pid %}">PLAN {{ plan.pid }}</a><br />
+              {% endfor %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

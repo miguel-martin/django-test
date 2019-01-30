@@ -9,24 +9,23 @@ def index(request):
     """ Renders a sample index page """
     return render(request, 'base.html', {'contents': 'My first app', 'titulo': 'Página ppal'})
 
-def list_all_centros(request):
+class CentroIndexView(generic.ListView):
 	""" Muestra informacion de todos los centros """
-	centros = Centro.objects.all()
-	return render(request, 'envios/centros.html', {'centros': centros})
+	template_name = 'envios/centros_index.html'
+	context_object_name = 'centros'
+
+	def get_queryset(self):
+		""" Genera el listado de todos los centros """
+		return Centro.objects.order_by('nombre')
 	
-def list_centro(request, id):
+class CentroDetailView(generic.DetailView):
 	""" Lista el centro id, si existe """ 
-	cid = int(id)
-	centro = get_object_or_404(Centro, cid=cid)	
-	return render(request, 'envios/centros.html', {'cid': cid, 'centros': [centro]})
+	model = Centro
+	template_name = 'envios/centro_detail.html'
 
 def edit_centro(request, id):
 	""" Edita el centro id, si existe """
 	return HttpResponseRedirect('/admin/envio/centro/{}/change'.format(id))
-
-#def delete_centro(request, id):
-#	""" Borra el centro id, si existe """
-#	pass 	
 
 class EstudioIndexView(generic.ListView):
 	""" Muestra informacion de todos los estudios """
@@ -35,8 +34,7 @@ class EstudioIndexView(generic.ListView):
 
 	def get_queryset(self):
 		""" Genera el listado de todos estudios """
-		return Estudio.objects.order_by('eid')
-	
+		return Estudio.objects.order_by('eid')	
 
 class EstudioDetailView(generic.DetailView):
 	""" Lista el esudio id, si existe """
@@ -47,9 +45,6 @@ def edit_estudio(request, id):
 	""" Edita el estudio id, si existe """
 	return HttpResponseRedirect('/admin/envio/estudio/{}/change'.format(id))
 
-#def delete_estudio(request, id):
-#	""" Borra el estudio id, si existe """
-#	pass
 
 def list_all_planes(request):
 	""" Muestra informacion de todos los planes """
