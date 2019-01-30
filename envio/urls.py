@@ -10,7 +10,7 @@ urlpatterns = [
     path('estudios/', views.EstudioIndexView.as_view(), name='list_all_estudios'),
     path('estudios/<int:pk>/', views.EstudioDetailView.as_view(), name='list_estudio'),
     path('estudios/<int:id>/editar', views.edit_estudio, name='edit_estudio'),
-    path('planes/', views.list_all_planes, name='list_all_planes'),
-    path('planes/<int:id>/', views.list_plan, name='list_plan'),
+    path('planes/', views.PlanIndexView.as_view(), name='list_all_planes'),
+    path('planes/<int:pk>/', views.PlanDetailView.as_view(), name='list_plan'),
     path('planes/<int:id>/editar', views.edit_plan, name='edit_plan'),
 ]

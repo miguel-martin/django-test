@@ -1,0 +1,34 @@
+{% extends "envios/base.html" %}
+
+{% block titulo %}
+    <h1> {{ plan.pid }} - {{ plan.estudio.nombre }} </h1>
+{% endblock %}
+
+{% block content %}
+<!-- for debugging purposes -->
+<textarea onclick="this.focus();this.select()" style="width: 100%;"> 
+    {% filter force_escape %} {% debug %} {% endfilter %}
+</textarea>
+<!-- ToDo: delete -->
+
+<table class="table table-striped">
+    <tbody>
+      <tr>
+          <th>Código de plan</th>
+            <td>{{ plan.pid }}</td>
+        </tr>
+        <tr>
+          <th>Curso</th>
+            <td>{{ plan.curso }}</td>
+        </tr>
+        <tr>
+          <th>Estudio</th>
+            <td><a href="{% url 'list_estudio' plan.estudio.eid %}">{{ plan.estudio.nombre }}</a></td>
+        </tr>
+        <tr>
+          <th>Centro</th>
+            <td><a href="{% url 'list_centro' plan.centro.cid %}">{{ plan.centro.nombre }}</a></td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

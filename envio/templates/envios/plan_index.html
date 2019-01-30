@@ -2,9 +2,6 @@
 
 {% block titulo %}
     <h1> INFORMACIÓN DE PLANES </h1>
-    {% if pid %}
-      <h2>PLAN {{ pid }}</h2>
-    {% endif %}
 {%endblock %}
 
 {% block content %}
@@ -21,7 +18,7 @@
       </thead>
     {% for p in planes %}
         <tr>
-          <td><a href="{% url 'list_plan' p.pid %}">{{ p.pid}}</a> </td>
+          <td><a href="{% url 'list_plan' p.pid %}">{{ p.pid }}</a> </td>
           <td>{{ p.get_curso_display }}</td>
           <td><a href="{% url 'list_estudio' p.estudio.eid %}">{{ p.estudio.nombre }}</a> </td>
           <td><a href="{% url 'list_centro' p.centro.cid %}">{{ p.centro.nombre }}</a></td>

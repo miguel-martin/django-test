@@ -45,17 +45,19 @@ def edit_estudio(request, id):
 	""" Edita el estudio id, si existe """
 	return HttpResponseRedirect('/admin/envio/estudio/{}/change'.format(id))
 
-
-def list_all_planes(request):
+class PlanIndexView(generic.ListView):
 	""" Muestra informacion de todos los planes """
-	planes = Plan.objects.all()
-	return render(request, 'envios/planes.html', {'planes': planes})
+	template_name = 'envios/plan_index.html'
+	context_object_name = 'planes'
 
-def list_plan(request, id):
+	def get_queryset(self):
+		""" Genera el listado de todos los planes"""
+		return Plan.objects.order_by('pid')
+
+class PlanDetailView(generic.DetailView):
 	""" Lista el plan id, si existe """ 
-	pid = int(id)
-	plan = get_object_or_404(Plan, pid=pid)
-	return render(request, 'envios/planes.html', {'pid': pid, 'planes': [plan]})
+	model = Plan
+	template_name = 'envios/plan_detail.html'
 
 def edit_plan(request, id):
 	""" Edita el plan id, si existe """
