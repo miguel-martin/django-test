@@ -1,14 +1,16 @@
 {% extends "envios/base.html" %}
 
-<!-- for debugging purposes -->
-<textarea onclick="this.focus();this.select()" style="width: 100%;"> {% filter force_escape %} {% debug %} {% endfilter %}</textarea>
-<!-- ToDo: delete -->
-
 {% block titulo %}
     <h1> {{ estudio.nombre }} </h1>
 {% endblock %}
 
 {% block content %}
+<!-- for debugging purposes -->
+<textarea onclick="this.focus();this.select()" style="width: 100%;"> 
+    {% filter force_escape %} {% debug %} {% endfilter %}
+</textarea>
+<!-- ToDo: delete -->
+
 <table class="table table-striped">
     <tbody>
         <tr>
@@ -22,8 +24,11 @@
         <tr>
           <th>Impartido en:</th>
           <td>
-          {% for centro in estudio.centros.all %}
+          <!--{% for centro in estudio.centros.all %}
             <a href="{% url 'list_centro' centro.cid %}">{{ centro }}</a><br />
+          {% endfor %}-->
+          {% for plan in estudio.plan_set.all %}
+            <a href="{% url 'list_centro' plan.centro.cid %}">{{ plan.centro }}</a> (<a href="{%url 'list_plan' plan.pid %}">PLAN {{ plan.pid }}</a>)<br />
           {% endfor %}
           </td>
         </tr>
