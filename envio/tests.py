@@ -13,9 +13,9 @@ def create_estudio(eid, nombre, tipo):
 	""" Crea un centro """
 	return Estudio.objects.create(eid=eid, nombre=nombre, tipo=tipo)
 
-def create_plan(pid, estudio, centro):
+def create_plan(pid, curso, estudio, centro):
 	""" Crea un plan """
-	return Plan.objects.create(pid=pid, centro=centro, estudio=estudio)
+	return Plan.objects.create(pid=pid, curso=curso, centro=centro, estudio=estudio)
 
 
 class CentroModelTests(TestCase):
@@ -85,7 +85,7 @@ class EstudioModelTests(TestCase):
     	Crea un estudio y comprueba que aparece en el listado de estudios
     	"""
     	create_estudio(157, "Graduado en Estudios en Arquitectura", 5)
-    	response = self.client.get(reverse('list_estudio', kwargs={'pk': 157}))
+    	response = self.client.get(reverse('list_estudio', kwargs={'pk': 157}))	
     	self.assertEqual(response.status_code, 200)
     	self.assertContains(response, "Graduado en Estudios en Arquitectura")
     	self.assertQuerysetEqual(
@@ -105,5 +105,35 @@ class PlanModelTests(TestCase):
         self.assertContains(response, "No hay planes en la base de datos.")
         self.assertQuerysetEqual(response.context['planes'], [])
 
+    def test_create_plan_and_view_listing(self):
+    	""" 
+    	Crea un centro/estudio/plan y comprueba que aparece en el listado de planes
+    	"""
+    	create_centro(cid=110, nombre='Escuela de Ingeniería y Arquitectura', localidad='Z', url='http://eina.unizar.es')
+    	create_estudio(157, "Graduado en Estudios en Arquitectura", 5)
+    	create_plan(470, curso='2018', estudio=Estudio.objects.get(eid=157), centro=Centro.objects.get(cid=110))
+    	response = self.client.get(reverse('list_all_planes'))
+    	self.assertEqual(response.status_code, 200)
+    	self.assertContains(response, "Escuela de Ingeniería y Arquitectura")
+    	self.assertContains(response, "Graduado en Estudios en Arquitectura")
+    	self.assertQuerysetEqual(
+    		response.context['planes'],
+    		['<Plan: 470 - (157) Graduado en Estudios en Arquitectura>']
+    	)
 
+    def test_create_plan_and_view_detail(self):
+    	"""
+    	Crea un centro/estudio/plan y comprueba que aparece el detalle del plan
+    	"""
+    	create_centro(cid=110, nombre='Escuela de Ingeniería y Arquitectura', localidad='Z', url='http://eina.unizar.es')
+    	create_estudio(157, "Graduado en Estudios en Arquitectura", 5)
+    	create_plan(470, curso='2018', estudio=Estudio.objects.get(eid=157), centro=Centro.objects.get(cid=110))
+    	response = self.client.get(reverse('list_plan', kwargs={'pk':470}))
+    	self.assertEqual(response.status_code, 200)
+    	self.assertContains(response, "Escuela de Ingeniería y Arquitectura")
+    	self.assertContains(response, "Graduado en Estudios en Arquitectura")
+    	self.assertQuerysetEqual(
+    		[response.context['plan']],
+    		['<Plan: 470 - (157) Graduado en Estudios en Arquitectura>']
+    	)
 
