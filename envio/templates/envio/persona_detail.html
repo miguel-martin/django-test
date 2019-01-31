@@ -1,0 +1,25 @@
+{% extends "envio/base.html" %}
+
+{% block titulo %}
+    <h1> {{ persona.nombre }} {{ persona.apellidos }} </h1>
+{% endblock %}
+
+{% block content %}
+
+<table class="table table-striped">
+    <tbody>
+      <tr>
+          <th>NIP</th>
+            <td>{{ persona.nip }}</td>
+        </tr>
+        <tr>
+          <th>Nombre y apellidos</th>
+            <td>{{ persona.nombre }} {{ persona.apellidos }}</td>
+        </tr>
+        <tr>
+          <th>Email</th>
+            <td>{{ persona.email }}</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

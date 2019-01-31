@@ -1,4 +1,4 @@
-from envio.models import Centro, Estudio, Plan
+from envio.models import Centro, Estudio, Plan, Persona, Matricula, Entrega
 
 centros = [  
     Centro(100, 'Facultad de Ciencias','Z'),
@@ -34,3 +34,14 @@ planes = [
 
 for p in planes:
     p.save()
+
+
+personas = [
+    Persona(nip=512798, nombre="Miguel", apellidos="Martín González"),
+    Persona(nip=123456, nombre="Pedrito", apellidos="Gutierrez Giménez"),
+]
+
+for p in personas:
+    p.save()
+
+

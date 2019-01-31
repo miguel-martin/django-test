@@ -1,0 +1,28 @@
+{% extends "envio/base.html" %}
+
+{% block titulo %}
+    <h1> INFORMACIÓN DE PERSONAS </h1>
+{% endblock %}
+
+{% block content %}
+     {% if personas %}
+         <table class="table table-striped">
+           <thead>
+           	<tr>
+           	  <th>NIP</th>
+           	  <th>NOMBRE y APELLIDOS</th>
+           	  <th>EMAIL</th>
+           	</tr>
+           </thead>
+         {% for p in personas %}
+             <tr>
+             	<td>{{ p.nip }} </td>
+             	<td><a href="{% url 'list_persona' p.nip %}">{{ p.nombre }} {{ p.apellidos }}</a> </td>
+             	<td>{{ p.email }}</td>
+             </tr>
+         {% endfor %}
+         </table>
+     {% else %}
+         <p>No hay personas en la base de datos.</p>
+     {% endif %}
+{% endblock %}

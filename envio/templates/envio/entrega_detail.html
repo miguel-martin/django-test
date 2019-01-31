@@ -1,0 +1,29 @@
+{% extends "envio/base.html" %}
+
+{% block titulo %}
+    <h1> {{ entrega }} </h1>
+{% endblock %}
+
+{% block content %}
+
+<table class="table table-striped">
+    <tbody>
+      <tr>
+          <th>FECHA</th>
+            <td>{{ entrega.fecha }}</td>
+        </tr>
+        <tr>
+          <th>ALUMNO</th>
+            <td>{{ entrega.matricula.persona.nombre }} {{ entrega.matricula.persona.apellidos }}</td>
+        </tr>
+        <tr>
+          <th>TITULO</th>
+            <td>{{ entrega.titulo }}</td>
+        </tr>
+        <tr>
+          <th>RESUMEN</th>
+            <td>{{ entrega.resumen }}</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

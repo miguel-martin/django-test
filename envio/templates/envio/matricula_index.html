@@ -1,0 +1,28 @@
+{% extends "envio/base.html" %}
+
+{% block titulo %}
+    <h1> INFORMACIÓN DE MATRICULAS </h1>
+{% endblock %}
+
+{% block content %}
+     {% if matriculas %}
+         <table class="table table-striped">
+           <thead>
+           	<tr>
+              <th>CURSO</th>
+           	  <th>ALUMNO</th>
+           	  <th>PLAN/ESTUDIO</th>
+           	</tr>
+           </thead>
+         {% for m in matriculas %}
+             <tr>
+              <td>{{ m.curso }}</td>
+             	<td>{{ m.persona.nip }} {{ m.persona.nombre }} {{ m.persona.apellidos }} </td>
+             	<td>{{ m.plan }} </td>
+             </tr>
+         {% endfor %}
+         </table>
+     {% else %}
+         <p>No hay matriculas en la base de datos.</p>
+     {% endif %}
+{% endblock %}

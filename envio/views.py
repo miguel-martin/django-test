@@ -1,13 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
-from envio.models import Centro, Estudio, Plan
+from envio.models import Centro, Estudio, Plan, Persona, Matricula, Entrega
 from django.views import generic
 
 
 
 def index(request):
     """ Renders a sample index page """
-    return render(request, 'base.html', {'contents': 'My first app', 'titulo': 'Página ppal'})
+    return render(request, 'envio/base.html', {'contents': 'Use la barra superior para navegar', 'titlepag': 'Gestión de Trabajos'})
 
 class CentroIndexView(generic.ListView):
 	""" Muestra informacion de todos los centros """
@@ -62,4 +62,48 @@ class PlanDetailView(generic.DetailView):
 def edit_plan(request, id):
 	""" Edita el plan id, si existe """
 	return HttpResponseRedirect('/admin/envio/plan/{}/change/'.format(id))
+
+class PersonaIndexView(generic.ListView):
+	""" Muestra informacion de todas las personas """
+	template_name = 'envio/persona_index.html'
+	context_object_name = 'personas'
+
+	def get_queryset(self):
+		""" Genera el listado de todas las personas por orden de sus apellidos """
+		return Persona.objects.order_by('apellidos')
+
+class PersonaDetailView(generic.DetailView):
+	""" Lista la persona, si existe """ 
+	model = Persona
+	template_name = 'envio/persona_detail.html'
+
+class MatriculaIndexView(generic.ListView):
+	""" Muestra informacion de todas las matriculas """
+	template_name = 'envio/matricula_index.html'
+	context_object_name = 'matriculas'
+
+	def get_queryset(self):
+		""" Genera el listado de todas las matriculas por orden de sus apellidos """
+		return Matricula.objects.all()
+
+class MatriculaDetailView(generic.DetailView):
+	""" Lista la matricula, si existe """ 
+	model = Matricula
+	template_name = 'envio/matricula_detail.html'
+
+class EntregaIndexView(generic.ListView):
+	""" Muestra informacion de todas las matriculas """
+	template_name = 'envio/entrega_index.html'
+	context_object_name = 'entregas'
+
+	def get_queryset(self):
+		""" Genera el listado de todas las matriculas por orden de sus apellidos """
+		return Entrega.objects.all()
+
+class EntregaDetailView(generic.DetailView):
+	""" Lista la entrega, si existe """ 
+	model = Entrega
+	template_name = 'envio/entrega_detail.html'
+
+
 

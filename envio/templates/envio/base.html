@@ -23,9 +23,12 @@
         <ul class="navbar-nav mr-auto">
           <li class="nav-item"><a class="nav-link" href="/admin">ADMIN</a></li>
           <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="/centros">Centros</a></li>
-          <li class="nav-item"><a class="nav-link" href="/estudios">Estudios</a></li>
-          <li class="nav-item"><a class="nav-link" href="/planes">Planes</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'list_all_centros' %}">Centros</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'list_all_estudios' %}">Estudios</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'list_all_planes' %}">Planes</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'list_all_personas' %}">Personas</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'list_all_matriculas' %}">Matriculas</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'list_all_entregas' %}">Entregas</a></li>
         </ul>
      </div>
   </nav>

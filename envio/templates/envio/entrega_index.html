@@ -1,0 +1,30 @@
+{% extends "envio/base.html" %}
+
+{% block titulo %}
+    <h1> INFORMACIÓN DE ENTREGAS </h1>
+{% endblock %}
+
+{% block content %}
+     {% if entregas %}
+         <table class="table table-striped">
+           <thead>
+           	<tr>
+              <th>FECHA ENTREGA</th>
+           	  <th>ALUMNO</th>
+           	  <th>PLAN</th>
+              <th>TITULO</th>
+           	</tr>
+           </thead>
+         {% for e in entregas %}
+             <tr>
+              <td>{{ e.fecha }}</td>
+             	<td>{{ e.matricula.persona }}</td>
+             	<td>{{ e.matricula.plan }}</td>
+              <td>{{ e.titulo }}</td>
+             </tr>
+         {% endfor %}
+         </table>
+     {% else %}
+         <p>No hay entregas en la base de datos.</p>
+     {% endif %}
+{% endblock %}

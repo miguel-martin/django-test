@@ -13,4 +13,10 @@ urlpatterns = [
     path('planes/', views.PlanIndexView.as_view(), name='list_all_planes'),
     path('planes/<int:pk>/', views.PlanDetailView.as_view(), name='list_plan'),
     path('planes/<int:id>/editar', views.edit_plan, name='edit_plan'),
+    path('personas/', views.PersonaIndexView.as_view(), name='list_all_personas'),
+    path('personas/<int:pk>/', views.PersonaDetailView.as_view(), name='list_persona'),
+    path('matriculas/', views.MatriculaIndexView.as_view(), name='list_all_matriculas'),
+    path('matriculas/<int:pk>/', views.MatriculaDetailView.as_view(), name='list_matricula'),
+    path('entregas/', views.EntregaIndexView.as_view(), name='list_all_entregas'),
+    path('entregas/<int:pk>/', views.EntregaDetailView.as_view(), name='list_entrega'),
 ]
