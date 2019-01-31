@@ -9,6 +9,14 @@ def create_centro(cid, nombre, url, localidad):
 	""" Crea un centro """
 	return Centro.objects.create(cid=cid, nombre=nombre, localidad=localidad, url=url)
 
+def create_estudio(eid, nombre, tipo):
+	""" Crea un centro """
+	return Estudio.objects.create(eid=eid, nombre=nombre, tipo=tipo)
+
+def create_plan(pid, estudio, centro):
+	""" Crea un plan """
+	return Plan.objects.create(pid=pid, centro=centro, estudio=estudio)
+
 
 class CentroModelTests(TestCase):
 
@@ -58,6 +66,32 @@ class EstudioModelTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "No hay estudios en la base de datos.")
         self.assertQuerysetEqual(response.context['estudios'], [])
+
+    def test_create_estudio_and_view_listing(self):
+    	""" 
+    	Crea un estudio y comprueba que aparece en el listado de estudios
+    	"""
+    	create_estudio(157, "Graduado en Estudios en Arquitectura", 5)
+    	response = self.client.get(reverse('list_all_estudios'))
+    	self.assertEqual(response.status_code, 200)
+    	self.assertContains(response, "Graduado en Estudios en Arquitectura")
+    	self.assertQuerysetEqual(
+    		response.context['estudios'],
+    		['<Estudio: (157) Graduado en Estudios en Arquitectura>']
+    	)
+
+    def test_create_estudio_and_view_detail(self):
+    	""" 
+    	Crea un estudio y comprueba que aparece en el listado de estudios
+    	"""
+    	create_estudio(157, "Graduado en Estudios en Arquitectura", 5)
+    	response = self.client.get(reverse('list_estudio', kwargs={'pk': 157}))
+    	self.assertEqual(response.status_code, 200)
+    	self.assertContains(response, "Graduado en Estudios en Arquitectura")
+    	self.assertQuerysetEqual(
+    		[response.context['estudio']],
+    		['<Estudio: (157) Graduado en Estudios en Arquitectura>']
+    	)
 
 
 class PlanModelTests(TestCase):
