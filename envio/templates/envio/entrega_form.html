@@ -1,0 +1,15 @@
+{% extends "envio/base.html" %}
+
+{% block titulo %}
+    <h1> AÑADIR / MODIFICAR ENTREGA </h1>
+{% endblock %}
+
+{% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+    <table id="form-entrega" class="table">
+        {{ form.as_table }}
+    </table>
+    <input type="submit" value="Enviar">
+</form>
+{% endblock %}

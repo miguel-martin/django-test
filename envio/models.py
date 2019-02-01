@@ -87,6 +87,8 @@ class Matricula(models.Model):
     def __str__(self):
         return("{} está matriculado en el plan {}".format(self.persona, self.plan))
 
+    def get_nombre_estudio(self):
+        return self.plan.estudio.nombre
 
 class Entrega(models.Model):
     """ Modela las Entregas de trabajos que realiza una Persona """
@@ -99,5 +101,9 @@ class Entrega(models.Model):
 
     def __str__(self):
         return("{} - Entrega {} del alumno {}".format(self.fecha, self.tid, self.matricula.persona))
+
+
+
+
 
 

@@ -9,6 +9,7 @@
          <table class="table table-striped">
            <thead>
            	<tr>
+              <th></th>
               <th>FECHA ENTREGA</th>
            	  <th>ALUMNO</th>
            	  <th>PLAN</th>
@@ -17,6 +18,7 @@
            </thead>
          {% for e in entregas %}
              <tr>
+              <td><a href="{% url 'list_entrega' e.tid %}"><i class="far fa-eye"></i></td>
               <td>{{ e.fecha }}</td>
              	<td>{{ e.matricula.persona }}</td>
              	<td>{{ e.matricula.plan }}</td>

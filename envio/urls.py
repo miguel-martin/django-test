@@ -19,4 +19,5 @@ urlpatterns = [
     path('matriculas/<int:pk>/', views.MatriculaDetailView.as_view(), name='list_matricula'),
     path('entregas/', views.EntregaIndexView.as_view(), name='list_all_entregas'),
     path('entregas/<int:pk>/', views.EntregaDetailView.as_view(), name='list_entrega'),
+    path('entregas/nueva/<int:nip>', views.edit_or_create_Entrega, name='edit_create_entrega')
 ]

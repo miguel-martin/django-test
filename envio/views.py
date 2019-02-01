@@ -1,7 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from envio.models import Centro, Estudio, Plan, Persona, Matricula, Entrega
 from django.views import generic
+from django.urls import reverse
+from .forms import EntregaForm
 
 
 
@@ -104,6 +106,33 @@ class EntregaDetailView(generic.DetailView):
 	""" Lista la entrega, si existe """ 
 	model = Entrega
 	template_name = 'envio/entrega_detail.html'
+
+
+def edit_or_create_Entrega(request, nip):
+	""" Muestra el form para realizar entregas """
+	if request.method == "POST":
+		# create form instance and populate it with data from the request
+		form = EntregaForm(request.POST)
+		if form.is_valid():
+			# ToDo procesar
+			# ToDo guardar
+			nueva_entrega = form.save()
+			# redirigir
+			return HttpResponseRedirect(reverse('list_entrega', kwargs={'tid':nueva_entrega.tid}))
+	else:
+		# if a GET (or any other method) we'll create a blank form
+		# we'll limit the Matricula choices to the ones that correspond to that nip
+		form = EntregaForm()
+		matriculas = get_list_or_404(Matricula, persona__nip=nip)
+		matriculas_filtered_choices = []
+		for matricula in matriculas:
+			matriculas_filtered_choices.append([matricula.pk, matricula.get_nombre_estudio()])
+		form.fields['matricula'].choices = matriculas_filtered_choices
+
+	return render(request, 'envio/entrega_form.html', {'form': form})
+	
+
+
 
 
 
