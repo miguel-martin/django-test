@@ -114,11 +114,11 @@ AUTH_LDAP_CONNECTION_OPTIONS = {
     #ldap.OPT_REFERRALS: 1,
 }
 
-AUTH_LDAP_USER_SEARCH = LDAPSearch(
-    'ou=Accounts,dc=unizar,dc=es',
-    ldap.SCOPE_SUBTREE,
-    '(uid=%(user)s)',
-)
+#AUTH_LDAP_USER_SEARCH = LDAPSearch(
+#    'ou=Accounts,dc=unizar,dc=es',
+#    ldap.SCOPE_SUBTREE,
+#    '(uid=%(user)s)',
+#)
 AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s,ou=Accounts,dc=unizar,dc=es"
 
 # Populate the Django user from the LDAP directory.
@@ -134,7 +134,7 @@ AUTH_LDAP_ALWAYS_UPDATE_USER = True
 # unizar ldap not via TLS, plain. port 389
 AUTH_LDAP_START_TLS = False
 
-# UNIZAR LDAP WORKS LIKE A DIRECT BIND
+# UNIZAR LDAP WORKS LIKE A DIRECT BIND, SO NO AUTH_LDAP_USER_SEARCH_NEEDED
 # In order to check if the connection works, try ldapsearch first...
 # ldapsearch -L -h ldapmail.unizar.es -p 389 -D 'uid=AQUIELUID,ou=Accounts,dc=unizar,dc=es' -w AQUIELPASSWORD -b 'dc=unizar,dc=es' -s sub "uid=AQUIELUID"
 

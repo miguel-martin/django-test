@@ -1,3 +1,5 @@
+{% load i18n %} 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,24 +26,24 @@
         <ul class="navbar-nav mr-auto">
           {% if request.user.username %}
               {% if request.user.is_staff %}
-                   <li class="nav-item"><a class="nav-link" style="color:red;" href="/admin">ADMIN</a></li>
+                   <li class="nav-item"><a class="nav-link" style="color:red;" href="/admin">{% trans "ADMIN" %}</a></li>
               {% endif %}
-              <li class="nav-item"><a class="nav-link" href="{% url 'micuenta' %}" role="button">Cuenta</a></li>
-              <li class="nav-item"><a class="nav-link" href="{% url 'list_all_entregas' %}" role="button">Entregas realizadas</a></li>
-              <li class="nav-item"><a class="nav-link" href="{% url 'edit_create_entrega' %}">Nueva entrega</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'micuenta' %}" role="button">{% trans "Cuenta" %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'list_all_entregas' %}" role="button">{% trans "Entregas realizadas" %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'edit_create_entrega' %}">{% trans "Nueva entrega" %}</a></li>
           {% else %}
-              <li class="nav-item"><a class="nav-link" href="{% url 'login' %}" role="button">Identificarme</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'login' %}" role="button">{% trans "Identificarme" %}</a></li>
           {% endif %}
         </ul>
         {% if request.user.username %}
-        Conectado como {{ request.user.username }} | <a href="{% url 'logout' %}">Salir</a>
+        Conectado como {{ request.user.username }} | <a href="{% url 'logout' %}">{% trans "Salir" %}</a>
         {% endif %}
      </div>
   </nav>
   
   <div class="jumbotron text-center">
     {% block titulo %}
-        <h1> DEPÓSITO DE TRABAJOS ACADÉMICOS </h1>
+        <h1> {% trans "Depósito de trabajos académicos" %}</h1>
     {% endblock %}
   </div>
   
