@@ -3,13 +3,16 @@ from django.http import HttpResponse, HttpResponseRedirect
 from envio.models import Centro, Estudio, Plan, Persona, Matricula, Entrega
 from django.views import generic
 from django.urls import reverse
-from .forms import EntregaForm
+from .forms import EntregaForm, UserForm
+from django.contrib.auth.decorators import login_required
+from django.db import transaction
+from django.contrib.auth import authenticate, login, logout
 
 
 
 def index(request):
     """ Renders a sample index page """
-    return render(request, 'envio/base.html', {'contents': 'Use la barra superior para navegar', 'titlepag': 'Gestión de Trabajos'})
+    return render(request, 'envio/index.html', {'contents': 'Use la barra superior para navegar', 'titlepag': 'Gestión de Trabajos'})
 
 class CentroIndexView(generic.ListView):
 	""" Muestra informacion de todos los centros """
@@ -100,7 +103,7 @@ class EntregaIndexView(generic.ListView):
 
 	def get_queryset(self):
 		""" Genera el listado de todas las matriculas por orden de sus apellidos """
-		return Entrega.objects.all()
+		return Entrega.objects.filter(matricula__persona__user=self.request.user)
 
 class EntregaDetailView(generic.DetailView):
 	""" Lista la entrega, si existe """ 
@@ -108,7 +111,7 @@ class EntregaDetailView(generic.DetailView):
 	template_name = 'envio/entrega_detail.html'
 
 
-def edit_or_create_Entrega(request, nip):
+def edit_or_create_Entrega(request):
 	""" Muestra el form para realizar entregas """
 	if request.method == "POST":
 		# create form instance and populate it with data from the request
@@ -118,20 +121,26 @@ def edit_or_create_Entrega(request, nip):
 			# ToDo guardar
 			nueva_entrega = form.save()
 			# redirigir
-			return HttpResponseRedirect(reverse('list_entrega', kwargs={'tid':nueva_entrega.tid}))
+			return HttpResponseRedirect(reverse('list_all_entregas'))
 	else:
 		# if a GET (or any other method) we'll create a blank form
 		# we'll limit the Matricula choices to the ones that correspond to that nip
 		form = EntregaForm()
-		matriculas = get_list_or_404(Matricula, persona__nip=nip)
+		matriculas = get_list_or_404(Matricula, persona__user=request.user)
 		matriculas_filtered_choices = []
 		for matricula in matriculas:
 			matriculas_filtered_choices.append([matricula.pk, matricula.get_nombre_estudio()])
 		form.fields['matricula'].choices = matriculas_filtered_choices
 
 	return render(request, 'envio/entrega_form.html', {'form': form})
-	
 
+
+@login_required
+def user_view(request):
+    """ Muestra la información del usuario """
+    persona = get_object_or_404(Persona, user=request.user)
+    return render(request, 'envio/persona_detail.html', {'persona': persona})	
+    #return HttpResponse(format(request.user)) #request.user.username, request.user.firstname, request.user.lastname, request.user.email
 
 
 

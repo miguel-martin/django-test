@@ -1,7 +1,7 @@
 {% extends "envio/base.html" %}
 
 {% block titulo %}
-    <h1> {{ persona.nombre }} {{ persona.apellidos }} </h1>
+    <h1> Mis datos y entregas </h1>
 {% endblock %}
 
 {% block content %}
@@ -14,11 +14,27 @@
         </tr>
         <tr>
           <th>Nombre y apellidos</th>
-            <td>{{ persona.nombre }} {{ persona.apellidos }}</td>
+            <td>{{ persona.user.first_name|default:"-" }} {{ persona.user.last_name|default:"-" }}</td>
         </tr>
         <tr>
           <th>Email</th>
-            <td>{{ persona.email }}</td>
+            <td>{{ persona.user.email|default:"-" }}</td>
+        </tr>
+        <tr>
+          <th>Matriculado en</th>
+            <td>
+              {% for plan in persona.planes.all %}
+                  {{ plan }}<br />
+              {% endfor %}
+            </td>
+        </tr>
+        <tr>
+          <th>Entregas realizadas</th>
+          <td>
+            {% for e in persona.get_entregas %}
+                <a href="{% url 'list_entrega' e.tid %}"><i class="far fa-eye"></i></a> - {{ e }}<br />
+            {% endfor %}
+          </td>
         </tr>
     </tbody>
 </table>

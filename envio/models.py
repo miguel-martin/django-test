@@ -1,5 +1,10 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.contrib.auth.models import User
+
+# Automatically save/update Personas when we create/update User instances
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -58,15 +63,33 @@ class Plan(models.Model):
 
 class Persona(models.Model):
     """ Modela a las personas """
-
-    nip = models.IntegerField('NIP UNIZAR', primary_key=True, validators = [MaxValueValidator(999999), MinValueValidator(100000)])
-    nombre = models.CharField(max_length=200)
-    apellidos = models.CharField(max_length=300)
-    email = models.CharField(max_length=200, default=str(nip)+"@unizar.es")
+    
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    nip = models.IntegerField('NIP UNIZAR', null=True, blank=True, validators = [MaxValueValidator(999999), MinValueValidator(100000)])
     planes = models.ManyToManyField(Plan, through='Matricula')
+    
 
     def __str__(self):
-        return("({}) - {} {}".format(self.nip, self.nombre, self.apellidos))
+        return("({}) - {}".format(self.nip, self.user))
+
+    # ToDo Populate user info from ldap and other sources to get nip, matriculas and so on!!!
+    # refer to "Populating users" @ https://django-auth-ldap.readthedocs.io/en/latest/users.html
+    @receiver(post_save, sender=User)
+    def create_user_persona(sender, instance, created, **kwargs):
+        if created:
+            Persona.objects.create(user=instance)
+
+    # ToDo Populate user info from ldap and other sources to get nip, matriculas and so on!!!
+    # refer to "Populating users" @ https://django-auth-ldap.readthedocs.io/en/latest/users.html
+    @receiver(post_save, sender=User)
+    def save_user_persona(sender, instance, **kwargs):
+        instance.persona.save()
+
+    def get_entregas(self):
+        """ 
+        Obtiene las entregas de una persona
+        """
+        return Entrega.objects.filter(matricula__persona=self) 
 
 
 class Matricula(models.Model):
@@ -97,7 +120,7 @@ class Entrega(models.Model):
     titulo = models.CharField(max_length=500)
     resumen = models.CharField(max_length=5000)
     matricula = models.ForeignKey(Matricula, on_delete=models.CASCADE)
-    fecha = models.DateField(auto_now=True)
+    fecha = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return("{} - Entrega {} del alumno {}".format(self.fecha, self.tid, self.matricula.persona))

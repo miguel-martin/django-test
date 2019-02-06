@@ -1,0 +1,13 @@
+{% extends "envio/base.html" %}
+
+{% block titulo %}
+    <h1> LOGIN </h1>
+{% endblock %}
+
+{% block content %}
+<form id="login" method="post">
+  {% csrf_token %}
+  {{ user_form.as_p }}
+  <button type="submit">Enviar</button>
+</form>
+{% endblock %}

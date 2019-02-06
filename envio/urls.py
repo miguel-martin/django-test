@@ -1,4 +1,6 @@
-from django.urls import path
+from django.urls import path, include
+from django.conf import settings
+from django.contrib.auth import views as auth_views
 
 from . import views
 
@@ -19,5 +21,19 @@ urlpatterns = [
     path('matriculas/<int:pk>/', views.MatriculaDetailView.as_view(), name='list_matricula'),
     path('entregas/', views.EntregaIndexView.as_view(), name='list_all_entregas'),
     path('entregas/<int:pk>/', views.EntregaDetailView.as_view(), name='list_entrega'),
-    path('entregas/nueva/<int:nip>', views.edit_or_create_Entrega, name='edit_create_entrega')
+    path('entregas/nueva/', views.edit_or_create_Entrega, name='edit_create_entrega'),
+    path('micuenta/', views.user_view, name='micuenta'),
+    path('login/', auth_views.LoginView.as_view(template_name='envio/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 ]
+
+# To add debug bar. refer to https://django-debug-toolbar.readthedocs.io/en/latest/installation.html
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+
+        # For django versions before 2.0:
+        # url(r'^__debug__/', include(debug_toolbar.urls)),
+
+    ] + urlpatterns

@@ -17,31 +17,31 @@
 <body>
 
   <nav class="navbar navbar-expand-md navbar-light bg-light"">
-    <a class="navbar-brand" rel="home" href="http://www.unizar.es/">
+    <a class="navbar-brand" rel="home" href="{% url 'index' %}">
               <img id="logounizartop" alt="Logo UNIZAR" src="{% static 'envio/img/logoUZ.png' %}">
     </a>
     <div id="navegacion-top" class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item"><a class="nav-link" href="/admin">ADMIN</a></li>
-          <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'list_all_centros' %}">Centros</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'list_all_estudios' %}">Estudios</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'list_all_planes' %}">Planes</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'list_all_personas' %}">Personas</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'list_all_matriculas' %}">Matriculas</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'list_all_entregas' %}">Entregas</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'edit_create_entrega' 512798 %}">NUEVA ENTREGA 512798
-        </a></li>
+          {% if request.user.username %}
+              {% if request.user.is_staff %}
+                   <li class="nav-item"><a class="nav-link" style="color:red;" href="/admin">ADMIN</a></li>
+              {% endif %}
+              <li class="nav-item"><a class="nav-link" href="{% url 'micuenta' %}" role="button">Cuenta</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'list_all_entregas' %}" role="button">Entregas realizadas</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'edit_create_entrega' %}">Nueva entrega</a></li>
+          {% else %}
+              <li class="nav-item"><a class="nav-link" href="{% url 'login' %}" role="button">Identificarme</a></li>
+          {% endif %}
         </ul>
         {% if request.user.username %}
-        Conectado como {{ request.user.username }}
+        Conectado como {{ request.user.username }} | <a href="{% url 'logout' %}">Salir</a>
         {% endif %}
      </div>
   </nav>
   
   <div class="jumbotron text-center">
     {% block titulo %}
-        <h1> TRABAJOS DEMO APP </h1>
+        <h1> DEPÓSITO DE TRABAJOS ACADÉMICOS </h1>
     {% endblock %}
   </div>
   

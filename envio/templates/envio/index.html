@@ -1,0 +1,15 @@
+{% extends "envio/base.html" %}
+
+{% block content %}
+{% if request.user.username %}
+    {# el usuario esta loggeado #}
+    <a class="btn btn-primary btn-lg btn-block" href="{% url 'micuenta' %}" role="button">Mi cuenta</a>
+    <a class="btn btn-primary btn-lg btn-block" href="{% url 'micuenta' %}" role="button">Gestionar entregas</a>
+    <a class="btn btn-primary btn-lg btn-block" href="{% url 'edit_create_entrega' %}" role="button">Nueva entrega</a>
+{% else %}
+    {# el usuario no esta loggeado #}
+    <p style="text-align: center">Para gestionar la Entrega de tu Trabajo debes estar identificado. </p>
+    <a class="btn btn-primary btn-lg btn-block" href="{% url 'login' %}" role="button">Identificarme</a>
+{% endif %}
+
+{% endblock %}

@@ -1,6 +1,6 @@
 from django.forms import ModelForm
-from .models import Entrega
-
+from .models import Entrega, Persona
+from django.contrib.auth.models import User
 
 class EntregaForm(ModelForm):
     """ Modela un formulario para realizar Entregas """
@@ -17,3 +17,14 @@ class EntregaForm(ModelForm):
             'titulo': 'Título de tu Trabajo',
             'resumen': 'Resumen (ES)',
         }
+
+
+class UserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ['email', 'password']
+
+#class PersonaForm(ModelForm):
+#    class Meta:
+#        model = Persona
+#        fields = ('nip', 'planes')
