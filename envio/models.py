@@ -72,18 +72,24 @@ class Persona(models.Model):
     def __str__(self):
         return("({}) - {}".format(self.nip, self.user))
 
-    # ToDo Populate user info from ldap and other sources to get nip, matriculas and so on!!!
+
     # refer to "Populating users" @ https://django-auth-ldap.readthedocs.io/en/latest/users.html
+    # also could be done using signal @receiver(django_auth_ldap.backend.populate_user) 
+    # cheking @ shell
+    #   from django.contrib.auth import authenticate
+    #   u1 = authenticate(username="UNIZARUSERNAME",password="UNIZARPASSWORD")
     @receiver(post_save, sender=User)
     def create_user_persona(sender, instance, created, **kwargs):
-        if created:
-            Persona.objects.create(user=instance)
-
-    # ToDo Populate user info from ldap and other sources to get nip, matriculas and so on!!!
-    # refer to "Populating users" @ https://django-auth-ldap.readthedocs.io/en/latest/users.html
-    @receiver(post_save, sender=User)
-    def save_user_persona(sender, instance, **kwargs):
-        instance.persona.save()
+        if created: #first time a user logs ins, after user is saved...
+            try:
+                nip = int(instance.ldap_user.attrs.get("uidNumber")[0])
+                # ToDo link Persona with their Matriculas, in real time here, querying SIGM@, or prepopulate some way
+                Persona.objects.create(user=instance, nip=nip)
+            except (KeyError, IndexError):
+                Persona.objects.create(user=instance)
+                print("Error al obtener el nip desde el ldap, se guardara sin NIP")
+        else:
+            instance.persona.save()
 
     def get_entregas(self):
         """ 
