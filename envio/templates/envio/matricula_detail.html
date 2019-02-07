@@ -1,4 +1,5 @@
 {% extends "envio/base.html" %}
+{% load i18n %} 
 
 {% block titulo %}
     <h1> {{ matricula.persona.nombre }} {{ matricula.persona.apellidos }} </h1>
@@ -13,11 +14,11 @@
             <td>{{ matricula.persona.nip }}</td>
         </tr>
         <tr>
-          <th>Nombre y apellidos</th>
+          <th>{% trans "Nombre y apellidos" %}</th>
             <td>{{ matricula.persona.nombre }} {{ matricula.persona.apellidos }}</td>
         </tr>
         <tr>
-          <th>Curso</th>
+          <th>{% trans "Curso" %}</th>
             <td>{{ matricula.curso }}</td>
         </tr>
     </tbody>

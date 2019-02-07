@@ -7,6 +7,7 @@ from .forms import EntregaForm, UserForm
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.contrib.auth import authenticate, login, logout
+from django.utils.translation import gettext as _
 
 
 
@@ -111,6 +112,7 @@ class EntregaDetailView(generic.DetailView):
 	template_name = 'envio/entrega_detail.html'
 
 
+@login_required
 def edit_or_create_Entrega(request):
 	""" Muestra el form para realizar entregas """
 	if request.method == "POST":
@@ -118,7 +120,6 @@ def edit_or_create_Entrega(request):
 		form = EntregaForm(request.POST)
 		if form.is_valid():
 			# ToDo procesar
-			# ToDo guardar
 			nueva_entrega = form.save()
 			# redirigir
 			return HttpResponseRedirect(reverse('list_all_entregas'))
@@ -126,7 +127,11 @@ def edit_or_create_Entrega(request):
 		# if a GET (or any other method) we'll create a blank form
 		# we'll limit the Matricula choices to the ones that correspond to that nip
 		form = EntregaForm()
-		matriculas = get_list_or_404(Matricula, persona__user=request.user)
+		#matriculas = get_list_or_404(Matricula, persona__user=request.user)
+		matriculas = Matricula.objects.filter(persona__user=request.user)
+		if not matriculas:
+			return render(request,'envio/base.html', {'avisos': _("No hay matriculas disponibles")})
+		# if matriculas available, proceed...
 		matriculas_filtered_choices = []
 		for matricula in matriculas:
 			matriculas_filtered_choices.append([matricula.pk, matricula.get_nombre_estudio()])
@@ -140,8 +145,6 @@ def user_view(request):
     """ Muestra la información del usuario """
     persona = get_object_or_404(Persona, user=request.user)
     return render(request, 'envio/persona_detail.html', {'persona': persona})	
-    #return HttpResponse(format(request.user)) #request.user.username, request.user.firstname, request.user.lastname, request.user.email
-
 
 
 

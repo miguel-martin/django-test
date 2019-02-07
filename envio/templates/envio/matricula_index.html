@@ -1,7 +1,8 @@
 {% extends "envio/base.html" %}
+{% load i18n %} 
 
 {% block titulo %}
-    <h1> INFORMACIÓN DE MATRICULAS </h1>
+    <h1>{% trans "Matrículas" %} </h1>
 {% endblock %}
 
 {% block content %}
@@ -9,9 +10,9 @@
          <table class="table table-striped">
            <thead>
            	<tr>
-              <th>CURSO</th>
-           	  <th>ALUMNO</th>
-           	  <th>PLAN/ESTUDIO</th>
+              <th>{% trans "Curso" %}</th>
+           	  <th>{% trans "Alumno" %}</th>
+           	  <th>{% trans "Plan/Estudio" %}</th>
            	</tr>
            </thead>
          {% for m in matriculas %}
@@ -23,6 +24,6 @@
          {% endfor %}
          </table>
      {% else %}
-         <p>No hay matriculas en la base de datos.</p>
+         <p>{% trans "No hay matrículas en la base de datos" %}</p>
      {% endif %}
 {% endblock %}

@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import User
+from django.utils.translation import gettext as _
 
 # Automatically save/update Personas when we create/update User instances
 from django.db.models.signals import post_save
@@ -22,7 +23,7 @@ class Centro(models.Model):
     cid = models.IntegerField('Codigo de Centro', primary_key=True)
     nombre = models.CharField(max_length=250)
     localidad = models.CharField(max_length=1, choices=LOCALIDADES_CHOICES, default='-')
-    url = models.URLField('Página web del centro', default='http://unizar.es')
+    url = models.URLField(_('Página web del centro'), default='http://unizar.es')
 
     def __str__(self):
         return(self.nombre)
@@ -35,7 +36,7 @@ class Estudio(models.Model):
         (5, 'Grado'),
         (6, 'Máster'),
     )
-	eid = models.IntegerField('Código de Estudio', primary_key=True)
+	eid = models.IntegerField(_('Código de Estudio'), primary_key=True)
 	nombre = models.CharField(max_length=250)
 	tipo = models.IntegerField(choices=TIPOS_ESTUDIO_CHOICES)
 	centros = models.ManyToManyField(Centro, through='Plan')
@@ -52,7 +53,7 @@ class Plan(models.Model):
     	('2018', '2018/2019'),
     )
 
-    pid = models.IntegerField('Código de Plan', primary_key=True)
+    pid = models.IntegerField(_('Código de Plan'), primary_key=True)
     curso = models.CharField(max_length=4, choices=CURSOS_CHOICES) 
     estudio = models.ForeignKey(Estudio, on_delete=models.CASCADE)
     centro = models.ForeignKey(Centro, on_delete=models.CASCADE)
@@ -87,7 +88,7 @@ class Persona(models.Model):
                 Persona.objects.create(user=instance, nip=nip)
             except (KeyError, IndexError):
                 Persona.objects.create(user=instance)
-                print("Error al obtener el nip desde el ldap, se guardara sin NIP")
+                #print("Error al obtener el nip desde el ldap, se guardara sin NIP")
         else:
             instance.persona.save()
 
@@ -114,7 +115,7 @@ class Matricula(models.Model):
         unique_together = (("curso", "persona", "plan"),)
 
     def __str__(self):
-        return("{} está matriculado en el plan {}".format(self.persona, self.plan))
+        return(_("{} está matriculado en el plan {}".format(self.persona, self.plan)))
 
     def get_nombre_estudio(self):
         return self.plan.estudio.nombre
@@ -122,7 +123,7 @@ class Matricula(models.Model):
 class Entrega(models.Model):
     """ Modela las Entregas de trabajos que realiza una Persona """
 
-    tid = models.AutoField('Código de entrega', primary_key=True)
+    tid = models.AutoField(_('Código de entrega'), primary_key=True)
     titulo = models.CharField(max_length=500)
     resumen = models.CharField(max_length=5000)
     matricula = models.ForeignKey(Matricula, on_delete=models.CASCADE)

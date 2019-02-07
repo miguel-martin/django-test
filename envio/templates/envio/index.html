@@ -1,15 +1,14 @@
 {% extends "envio/base.html" %}
+{% load i18n %} 
 
 {% block content %}
-{% if request.user.username %}
-    {# el usuario esta loggeado #}
-    <a class="btn btn-primary btn-lg btn-block" href="{% url 'micuenta' %}" role="button">Mi cuenta</a>
-    <a class="btn btn-primary btn-lg btn-block" href="{% url 'micuenta' %}" role="button">Gestionar entregas</a>
-    <a class="btn btn-primary btn-lg btn-block" href="{% url 'edit_create_entrega' %}" role="button">Nueva entrega</a>
+{% if request.user.is_authenticated %}
+    <a class="btn btn-primary btn-lg btn-block" href="{% url 'micuenta' %}" role="button">{% trans "Mi cuenta" %}</a>
+    <a class="btn btn-primary btn-lg btn-block" href="{% url 'micuenta' %}" role="button">{% trans "Entregas" %}</a>
+    <a class="btn btn-primary btn-lg btn-block" href="{% url 'edit_create_entrega' %}" role="button">{% trans "Nueva entrega" %}</a>
 {% else %}
-    {# el usuario no esta loggeado #}
-    <p style="text-align: center">Para gestionar la Entrega de tu Trabajo debes estar identificado. </p>
-    <a class="btn btn-primary btn-lg btn-block" href="{% url 'login' %}" role="button">Identificarme</a>
+    <p style="text-align: center">{% trans "Para depositar de tu Trabajo debes estar identificado" %}</p>
+    <a class="btn btn-primary btn-lg btn-block" href="{% url 'login' %}" role="button">{% trans "Identificarme" %}</a>
 {% endif %}
 
 {% endblock %}
