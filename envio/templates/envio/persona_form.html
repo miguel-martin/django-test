@@ -1,4 +1,5 @@
 {% extends "envio/base.html" %}
+{% load i18n %} 
 
 {% block titulo %}
     <h1> LOGIN </h1>
@@ -9,6 +10,6 @@
   {% csrf_token %}
   {{ user_form.as_p }}
   {{ persona_form.as_p }}
-  <button type="submit">Guardar</button>
+  <button type="submit">{% trans "Guardar" %}</button>
 </form>
 {% endblock %}

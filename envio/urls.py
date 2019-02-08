@@ -25,6 +25,7 @@ urlpatterns = [
     path('micuenta/', views.user_view, name='micuenta'),
     path('login/', auth_views.LoginView.as_view(template_name='envio/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('i18n/', include('django.conf.urls.i18n'), name='set_language'), # refer to https://docs.djangoproject.com/en/2.2/topics/i18n/translation/#set-language-redirect-view
 ]
 
 # To add debug bar. refer to https://django-debug-toolbar.readthedocs.io/en/latest/installation.html

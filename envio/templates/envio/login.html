@@ -9,7 +9,7 @@
 
 {% if next %}
     {% if user.is_authenticated %}
-    <p>{% trans "Ya estás identificado como {{ user.username }}" %}</p>
+    <p>{% "Ya estás identificado como " %}{{ user.username }}</p>
     {% else %}
     <p>{% trans "Identifícate" %}</p>
     {% endif %}
@@ -34,6 +34,6 @@
     {# Reset password directly in the UNIZAR LDAP #}
     <p><a href="https://portalcorreo.unizar.es/">{% trans "¿Has olvidado tu contraseña?" %}</a></p>
 {% else %}
-    <p>{% trans "Ya estás identificado como {{ user.username }}" %}</p>
+    <p>{% trans "Ya estás identificado como " %}{{ user.username }}</p>
 {% endif %}
 {% endblock %}

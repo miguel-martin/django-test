@@ -20,7 +20,7 @@ class Centro(models.Model):
         ('A', 'LA ALMUNIA')
     )
 
-    cid = models.IntegerField('Codigo de Centro', primary_key=True)
+    cid = models.IntegerField(_('Codigo de Centro'), primary_key=True)
     nombre = models.CharField(max_length=250)
     localidad = models.CharField(max_length=1, choices=LOCALIDADES_CHOICES, default='-')
     url = models.URLField(_('Página web del centro'), default='http://unizar.es')
@@ -33,8 +33,8 @@ class Estudio(models.Model):
 	""" Modela los distintos estudios de la UZ """
 
 	TIPOS_ESTUDIO_CHOICES = (
-        (5, 'Grado'),
-        (6, 'Máster'),
+        (5, _('Grado')),
+        (6, _('Máster')),
     )
 	eid = models.IntegerField(_('Código de Estudio'), primary_key=True)
 	nombre = models.CharField(max_length=250)
@@ -66,7 +66,7 @@ class Persona(models.Model):
     """ Modela a las personas """
     
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    nip = models.IntegerField('NIP UNIZAR', null=True, blank=True, validators = [MaxValueValidator(999999), MinValueValidator(100000)])
+    nip = models.IntegerField('NIP', null=True, blank=True, validators = [MaxValueValidator(999999), MinValueValidator(100000)])
     planes = models.ManyToManyField(Plan, through='Matricula')
     
 
@@ -113,6 +113,8 @@ class Matricula(models.Model):
 
     class Meta: # para que actuen como una constraint, como si fuera una PK formada por los 3 campos
         unique_together = (("curso", "persona", "plan"),)
+        verbose_name = _('Matrícula')
+        verbose_name_plural = _('Matrículas')
 
     def __str__(self):
         return(_("{} está matriculado en el plan {}".format(self.persona, self.plan)))
@@ -130,7 +132,11 @@ class Entrega(models.Model):
     fecha = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return("{} - Entrega {} del alumno {}".format(self.fecha, self.tid, self.matricula.persona))
+        return(_("{} - Entrega {} del alumno {}").format(self.fecha, self.tid, self.matricula.persona))
+
+    class Meta:
+        verbose_name = _('Entrega')
+        verbose_name_plural = _('Entregas')
 
 
 

@@ -1,0 +1,186 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-02-08 18:04+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: models.py:23
+#, fuzzy
+#| msgid "Código de entrega"
+msgid "Codigo de Centro"
+msgstr "Deposit code"
+
+#: models.py:26
+msgid "Página web del centro"
+msgstr "Website"
+
+#: models.py:36
+msgid "Grado"
+msgstr ""
+
+#: models.py:37
+msgid "Máster"
+msgstr ""
+
+#: models.py:39
+msgid "Código de Estudio"
+msgstr "Study Program code"
+
+#: models.py:56
+msgid "Código de Plan"
+msgstr "Plan code"
+
+#: models.py:116
+#, fuzzy
+#| msgid "Matrículas"
+msgid "Matrícula"
+msgstr "Tuitions"
+
+#: models.py:117 templates/envio/matricula_index.html:5
+msgid "Matrículas"
+msgstr "Tuitions"
+
+#: models.py:120
+msgid "{} está matriculado en el plan {}"
+msgstr "{} is enrolled in plan {}"
+
+#: models.py:128
+msgid "Código de entrega"
+msgstr "Deposit code"
+
+#: models.py:135
+msgid "{} - Entrega {} del alumno {}"
+msgstr ""
+
+#: models.py:138
+#, fuzzy
+#| msgid "Entregas"
+msgid "Entrega"
+msgstr "Deposits"
+
+#: models.py:139 templates/envio/index.html:7
+#: templates/envio/persona_detail.html:33
+msgid "Entregas"
+msgstr "Deposits"
+
+#: templates/envio/base.html:29
+msgid "ADMIN"
+msgstr "ADMIN"
+
+#: templates/envio/base.html:31
+msgid "Cuenta"
+msgstr "Account"
+
+#: templates/envio/base.html:32
+msgid "Entregas realizadas"
+msgstr "Deposits"
+
+#: templates/envio/base.html:33 templates/envio/index.html:8
+msgid "Nueva entrega"
+msgstr "New deposit"
+
+#: templates/envio/base.html:35 templates/envio/index.html:11
+msgid "Identificarme"
+msgstr "Login"
+
+#: templates/envio/base.html:39
+msgid "Conectado como"
+msgstr ""
+
+#: templates/envio/base.html:39
+msgid "Salir"
+msgstr "Logout"
+
+#: templates/envio/base.html:47
+msgid "Depósito de trabajos académicos"
+msgstr "Academic works deposit"
+
+#: templates/envio/base.html:84
+msgid "Go"
+msgstr ""
+
+#: templates/envio/index.html:6 templates/envio/persona_detail.html:5
+msgid "Mi cuenta"
+msgstr "My account"
+
+#: templates/envio/index.html:10
+msgid "Para depositar de tu Trabajo debes estar identificado"
+msgstr "To deposit your Academic Work you must be logged in"
+
+#: templates/envio/login.html:7
+msgid "Combinación de nombre de usuario y contraseña incorrecta"
+msgstr "Wrong username/password combination"
+
+#: templates/envio/login.html:14
+msgid "Identifícate"
+msgstr "Log in"
+
+#: templates/envio/login.html:35
+msgid "¿Has olvidado tu contraseña?"
+msgstr "Forgot your password?"
+
+#: templates/envio/login.html:37
+#, fuzzy
+#| msgid "Ya estás identificado como {{ user.username }}"
+msgid "Ya estás identificado como "
+msgstr "You are already logged in as {{ user.username }}"
+
+#: templates/envio/matricula_detail.html:17
+#: templates/envio/persona_index.html:14
+msgid "Nombre y apellidos"
+msgstr "Name"
+
+#: templates/envio/matricula_detail.html:21
+#: templates/envio/matricula_index.html:13
+msgid "Curso"
+msgstr "Year"
+
+#: templates/envio/matricula_index.html:14
+msgid "Alumno"
+msgstr "Student"
+
+#: templates/envio/matricula_index.html:15
+msgid "Plan/Estudio"
+msgstr "Plan/Study Offer"
+
+#: templates/envio/matricula_index.html:27
+msgid "No hay matrículas en la base de datos"
+msgstr "No tuitions found in database"
+
+#: templates/envio/persona_detail.html:21 templates/envio/persona_index.html:15
+msgid "Email"
+msgstr ""
+
+#: templates/envio/persona_detail.html:25
+msgid "Matriculado en"
+msgstr "Enrolled in"
+
+#: templates/envio/persona_form.html:13
+msgid "Guardar"
+msgstr ""
+
+#: templates/envio/persona_index.html:27
+msgid "No hay personas en la base de datos"
+msgstr "No people found in database"
+
+#: templates/envio/user_form.html:12
+msgid "Enviar"
+msgstr ""
+
+#: views.py:133
+msgid "No hay matriculas disponibles"
+msgstr "No tuitions found in database"

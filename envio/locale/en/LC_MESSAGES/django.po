@@ -1,0 +1,178 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-02-08 18:04+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: models.py:23
+msgid "Codigo de Centro"
+msgstr ""
+
+#: models.py:26
+msgid "Página web del centro"
+msgstr ""
+
+#: models.py:36
+msgid "Grado"
+msgstr "Bachelor's Degree"
+
+#: models.py:37
+msgid "Máster"
+msgstr "Master's Degree"
+
+#: models.py:39
+msgid "Código de Estudio"
+msgstr "Study code"
+
+#: models.py:56
+msgid "Código de Plan"
+msgstr "Plan code"
+
+#: models.py:116
+msgid "Matrícula"
+msgstr "Enrollment"
+
+#: models.py:117 templates/envio/matricula_index.html:5
+msgid "Matrículas"
+msgstr "Enrollments"
+
+#: models.py:120
+msgid "{} está matriculado en el plan {}"
+msgstr "{} is enrolled in plan {}"
+
+#: models.py:128
+msgid "Código de entrega"
+msgstr ""
+
+#: models.py:135
+msgid "{} - Entrega {} del alumno {}"
+msgstr ""
+
+#: models.py:138
+msgid "Entrega"
+msgstr "Submission"
+
+#: models.py:139 templates/envio/index.html:7
+#: templates/envio/persona_detail.html:33
+msgid "Entregas"
+msgstr "Submissions"
+
+#: templates/envio/base.html:29
+msgid "ADMIN"
+msgstr ""
+
+#: templates/envio/base.html:31
+msgid "Cuenta"
+msgstr "Account"
+
+#: templates/envio/base.html:32
+msgid "Entregas realizadas"
+msgstr "Submissions"
+
+#: templates/envio/base.html:33 templates/envio/index.html:8
+msgid "Nueva entrega"
+msgstr "New submission"
+
+#: templates/envio/base.html:35 templates/envio/index.html:11
+msgid "Identificarme"
+msgstr "Log in"
+
+#: templates/envio/base.html:39
+msgid "Conectado como"
+msgstr "Logged in as"
+
+#: templates/envio/base.html:39
+msgid "Salir"
+msgstr "Log out"
+
+#: templates/envio/base.html:47
+msgid "Depósito de trabajos académicos"
+msgstr ""
+
+#: templates/envio/base.html:84
+msgid "Go"
+msgstr "Go"
+
+#: templates/envio/index.html:6 templates/envio/persona_detail.html:5
+msgid "Mi cuenta"
+msgstr "My Account"
+
+#: templates/envio/index.html:10
+msgid "Para depositar de tu Trabajo debes estar identificado"
+msgstr "To submit your Work you must be identified"
+
+#: templates/envio/login.html:7
+msgid "Combinación de nombre de usuario y contraseña incorrecta"
+msgstr "Invalid username/password combination"
+
+#: templates/envio/login.html:14
+msgid "Identifícate"
+msgstr "Login"
+
+#: templates/envio/login.html:35
+msgid "¿Has olvidado tu contraseña?"
+msgstr "Forgot your password?"
+
+#: templates/envio/login.html:37
+msgid "Ya estás identificado como "
+msgstr "Your are logged in as "
+
+#: templates/envio/matricula_detail.html:17
+#: templates/envio/persona_index.html:14
+msgid "Nombre y apellidos"
+msgstr "First and last name"
+
+#: templates/envio/matricula_detail.html:21
+#: templates/envio/matricula_index.html:13
+msgid "Curso"
+msgstr "Year"
+
+#: templates/envio/matricula_index.html:14
+msgid "Alumno"
+msgstr "Student"
+
+#: templates/envio/matricula_index.html:15
+msgid "Plan/Estudio"
+msgstr "Plan/Study Offer"
+
+#: templates/envio/matricula_index.html:27
+msgid "No hay matrículas en la base de datos"
+msgstr "No enrollment information found in daatabase"
+
+#: templates/envio/persona_detail.html:21 templates/envio/persona_index.html:15
+msgid "Email"
+msgstr "Email"
+
+#: templates/envio/persona_detail.html:25
+msgid "Matriculado en"
+msgstr "Enrolled in"
+
+#: templates/envio/persona_form.html:13
+msgid "Guardar"
+msgstr "Save"
+
+#: templates/envio/persona_index.html:27
+msgid "No hay personas en la base de datos"
+msgstr "No users found in database"
+
+#: templates/envio/user_form.html:12
+msgid "Enviar"
+msgstr "Send"
+
+#: views.py:133
+msgid "No hay matriculas disponibles"
+msgstr ""

@@ -20,6 +20,8 @@ from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
 from deposito.secret_settings import *
 
 
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -147,6 +149,12 @@ TIME_ZONE = 'Europe/Madrid'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+
+# limit languages to english and spanish
+LANGUAGES = [
+    ('es', 'Spanish'),
+    ('en', 'English'),
+]
 
 
 # Static files (CSS, JavaScript, Images)
