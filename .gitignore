@@ -87,3 +87,6 @@ secret_settings.py
 
 .env
 db.sqlite3
+
+### Media uploads ###
+media/

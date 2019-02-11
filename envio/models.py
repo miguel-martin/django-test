@@ -7,6 +7,7 @@ from django.utils.translation import gettext as _
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+import os
 
 # Create your models here.
 
@@ -99,7 +100,6 @@ class Persona(models.Model):
         """
         return Entrega.objects.filter(matricula__persona=self) 
 
-
 class Matricula(models.Model):
     """ Modela las matrículas de la persona """
 
@@ -145,12 +145,32 @@ class Entrega(models.Model):
     memoria = models.FileField(upload_to=user_upload_memoria_directory_path)
     anexos = models.FileField(null=True, blank=True, upload_to=user_upload_anexos_directory_path)
     
-
-   
-
-
     def __str__(self):
         return(_("{} - Entrega {} del alumno {}").format(self.fecha, self.tid, self.matricula.persona))
+
+    @receiver(models.signals.post_delete)
+    def auto_delete_file_on_delete(sender, instance, **kwargs):
+        """
+        Deletes file from filesystem
+        when corresponding 'Entrega' object is deleted.
+        """
+        if instance.memoria:
+            if os.path.isfile(instance.memoria.path):
+                os.remove(instance.memoria.path)
+        if instance.anexos:
+            if os.path.isfile(instance.anexos.path):
+                os.remove(instance.anexos.path)
+
+    @receiver(models.signals.pre_save)
+    def auto_delete_file_on_change(sender, instance, **kwargs):
+        """
+        Deletes old file from filesystem
+        when corresponding 'Entrega' object is updated
+        with new file.
+        """
+        if not instance.pk:
+            return False
+
 
     class Meta:
         verbose_name = _('Entrega')
