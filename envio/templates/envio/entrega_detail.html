@@ -10,28 +10,28 @@
 <table class="table table-striped">
     <tbody>
       <tr>
-          <th>FECHA</th>
+          <th>{% trans "Fecha" %}</th>
             <td>{{ entrega.fecha }}</td>
         </tr>
         <tr>
-          <th>ALUMNO</th>
+          <th>{% trans "Alumno" %}</th>
             <td>{{ entrega.matricula.persona.nombre }} {{ entrega.matricula.persona.apellidos }}</td>
         </tr>
         <tr>
-          <th>TITULO</th>
+          <th>{% trans "Título" %}</th>
             <td>{{ entrega.titulo }}</td>
         </tr>
         <tr>
-          <th>RESUMEN</th>
+          <th>{% trans "Resumen" %}</th>
             <td>{{ entrega.resumen }}</td>
         </tr>
         <tr>
-          <th>MEMORIA</th>
-            <td><a href="{{MEDIA_URL}}/{{ entrega.memoria }}"><i class="far fa-eye"></i> {% trans "Ver/Descargar" %}</a></td>
+          <th>{% trans "Memoria" %}</th>
+            <td><a href="{{MEDIA_URL}}{{ entrega.memoria }}"><i class="far fa-eye"></i> {% trans "Ver Memoria" %}</a></td>
         </tr>
         <tr>
-          <th>ANEXOS</th>
-            <td>{{ entrega.anexos }}</td>
+          <th>{% trans "Anexos" %}</th>
+            <td><a href="{{MEDIA_URL}}{{ entrega.anexos }}"><i class="far fa-eye"></i> {% trans "Ver Anexos" %}</a></td>
         </tr>
     </tbody>
 </table>

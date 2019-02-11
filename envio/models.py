@@ -171,6 +171,28 @@ class Entrega(models.Model):
         if not instance.pk:
             return False
 
+        # borrado de memoria...
+        try:
+            old_memoria = Entrega.objects.get(pk=instance.pk).memoria
+        except Entrega.DoesNotExist:
+            return False
+
+        new_memoria = instance.memoria
+        if not old_memoria == new_memoria:
+            if os.path.isfile(old_memoria.path):
+                os.remove(old_memoria.path)
+
+        # borrado de anexos...
+        try:
+            old_anexos = Entrega.objects.get(pk=instance.pk).anexos
+        except Entrega.DoesNotExist:
+            return False
+
+        new_anexos = instance.anexos
+        if not old_anexos == new_anexos:
+            if os.path.isfile(old_anexos.path):
+                os.remove(old_anexos.path)
+
 
     class Meta:
         verbose_name = _('Entrega')
