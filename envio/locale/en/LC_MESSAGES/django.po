@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-08 18:04+0100\n"
+"POT-Creation-Date: 2019-02-11 10:25+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,19 +54,19 @@ msgstr "Enrollments"
 msgid "{} está matriculado en el plan {}"
 msgstr "{} is enrolled in plan {}"
 
-#: models.py:128
+#: models.py:139
 msgid "Código de entrega"
 msgstr ""
 
-#: models.py:135
+#: models.py:152
 msgid "{} - Entrega {} del alumno {}"
 msgstr ""
 
-#: models.py:138
+#: models.py:155
 msgid "Entrega"
 msgstr "Submission"
 
-#: models.py:139 templates/envio/index.html:7
+#: models.py:156 templates/envio/index.html:7
 #: templates/envio/persona_detail.html:33
 msgid "Entregas"
 msgstr "Submissions"
@@ -103,7 +103,7 @@ msgstr "Log out"
 msgid "Depósito de trabajos académicos"
 msgstr ""
 
-#: templates/envio/base.html:84
+#: templates/envio/base.html:85
 msgid "Go"
 msgstr "Go"
 

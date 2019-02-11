@@ -122,6 +122,17 @@ class Matricula(models.Model):
     def get_nombre_estudio(self):
         return self.plan.estudio.nombre
 
+
+def user_upload_anexos_directory_path(instance, filename):
+    """ Returns a path where the file will be saved """
+    # file will be uploaded to MEDIA_ROOT/trabajos-depositados/user_<id>/<filename>
+    return 'trabajos-depositados/user_{0}/anexos-{1}'.format(instance.matricula.persona.user.id, filename)
+
+def user_upload_memoria_directory_path(instance, filename):
+    """ Returns a path where the file will be saved """
+    # file will be uploaded to MEDIA_ROOT/trabajos-depositados/user_<id>/<filename>
+    return 'trabajos-depositados/user_{0}/memoria-{1}'.format(instance.matricula.persona.user.id, filename)
+
 class Entrega(models.Model):
     """ Modela las Entregas de trabajos que realiza una Persona """
 
@@ -130,6 +141,12 @@ class Entrega(models.Model):
     resumen = models.CharField(max_length=5000)
     matricula = models.ForeignKey(Matricula, on_delete=models.CASCADE)
     fecha = models.DateTimeField(auto_now=True)
+    memoria = models.FileField(upload_to=user_upload_memoria_directory_path)
+    anexos = models.FileField(null=True, blank=True, upload_to=user_upload_anexos_directory_path)
+    
+
+   
+
 
     def __str__(self):
         return(_("{} - Entrega {} del alumno {}").format(self.fecha, self.tid, self.matricula.persona))

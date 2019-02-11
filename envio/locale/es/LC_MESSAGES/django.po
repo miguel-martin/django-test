@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-08 18:04+0100\n"
+"POT-Creation-Date: 2019-02-11 10:25+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,11 +22,11 @@ msgstr ""
 #, fuzzy
 #| msgid "Código de entrega"
 msgid "Codigo de Centro"
-msgstr "Deposit code"
+msgstr "Codigo de Centro"
 
 #: models.py:26
 msgid "Página web del centro"
-msgstr "Website"
+msgstr "Página web del centro"
 
 #: models.py:36
 msgid "Grado"
@@ -38,44 +38,44 @@ msgstr ""
 
 #: models.py:39
 msgid "Código de Estudio"
-msgstr "Study Program code"
+msgstr "Código de Estudio"
 
 #: models.py:56
 msgid "Código de Plan"
-msgstr "Plan code"
+msgstr "Código de Plan"
 
 #: models.py:116
 #, fuzzy
 #| msgid "Matrículas"
 msgid "Matrícula"
-msgstr "Tuitions"
+msgstr "Matrículas"
 
 #: models.py:117 templates/envio/matricula_index.html:5
 msgid "Matrículas"
-msgstr "Tuitions"
+msgstr "Matrículas"
 
 #: models.py:120
 msgid "{} está matriculado en el plan {}"
-msgstr "{} is enrolled in plan {}"
+msgstr "{} está matriculado en el plan {}"
 
-#: models.py:128
+#: models.py:139
 msgid "Código de entrega"
-msgstr "Deposit code"
+msgstr "Código de entrega"
 
-#: models.py:135
+#: models.py:152
 msgid "{} - Entrega {} del alumno {}"
 msgstr ""
 
-#: models.py:138
+#: models.py:155
 #, fuzzy
 #| msgid "Entregas"
 msgid "Entrega"
-msgstr "Deposits"
+msgstr "Entrega"
 
-#: models.py:139 templates/envio/index.html:7
+#: models.py:156 templates/envio/index.html:7
 #: templates/envio/persona_detail.html:33
 msgid "Entregas"
-msgstr "Deposits"
+msgstr "Entregas"
 
 #: templates/envio/base.html:29
 msgid "ADMIN"
@@ -83,19 +83,19 @@ msgstr "ADMIN"
 
 #: templates/envio/base.html:31
 msgid "Cuenta"
-msgstr "Account"
+msgstr "Cuenta"
 
 #: templates/envio/base.html:32
 msgid "Entregas realizadas"
-msgstr "Deposits"
+msgstr "Entregas realizadas"
 
 #: templates/envio/base.html:33 templates/envio/index.html:8
 msgid "Nueva entrega"
-msgstr "New deposit"
+msgstr "Nueva entrega"
 
 #: templates/envio/base.html:35 templates/envio/index.html:11
 msgid "Identificarme"
-msgstr "Login"
+msgstr "Identificarme"
 
 #: templates/envio/base.html:39
 msgid "Conectado como"
@@ -103,84 +103,84 @@ msgstr ""
 
 #: templates/envio/base.html:39
 msgid "Salir"
-msgstr "Logout"
+msgstr "Salir"
 
 #: templates/envio/base.html:47
 msgid "Depósito de trabajos académicos"
-msgstr "Academic works deposit"
+msgstr "Depósito de trabajos académicos"
 
-#: templates/envio/base.html:84
+#: templates/envio/base.html:85
 msgid "Go"
-msgstr ""
+msgstr "Ir"
 
 #: templates/envio/index.html:6 templates/envio/persona_detail.html:5
 msgid "Mi cuenta"
-msgstr "My account"
+msgstr "Mi cuenta"
 
 #: templates/envio/index.html:10
 msgid "Para depositar de tu Trabajo debes estar identificado"
-msgstr "To deposit your Academic Work you must be logged in"
+msgstr "Para depositar de tu Trabajo debes estar identificado"
 
 #: templates/envio/login.html:7
 msgid "Combinación de nombre de usuario y contraseña incorrecta"
-msgstr "Wrong username/password combination"
+msgstr "Combinación de nombre de usuario y contraseña incorrecta"
 
 #: templates/envio/login.html:14
 msgid "Identifícate"
-msgstr "Log in"
+msgstr "Identifícate"
 
 #: templates/envio/login.html:35
 msgid "¿Has olvidado tu contraseña?"
-msgstr "Forgot your password?"
+msgstr "¿Has olvidado tu contraseña?"
 
 #: templates/envio/login.html:37
 #, fuzzy
 #| msgid "Ya estás identificado como {{ user.username }}"
 msgid "Ya estás identificado como "
-msgstr "You are already logged in as {{ user.username }}"
+msgstr "Ya estás identificado como"
 
 #: templates/envio/matricula_detail.html:17
 #: templates/envio/persona_index.html:14
 msgid "Nombre y apellidos"
-msgstr "Name"
+msgstr "Nombre y apellidos"
 
 #: templates/envio/matricula_detail.html:21
 #: templates/envio/matricula_index.html:13
 msgid "Curso"
-msgstr "Year"
+msgstr "Curso"
 
 #: templates/envio/matricula_index.html:14
 msgid "Alumno"
-msgstr "Student"
+msgstr "Alumno"
 
 #: templates/envio/matricula_index.html:15
 msgid "Plan/Estudio"
-msgstr "Plan/Study Offer"
+msgstr "Plan/Estudio"
 
 #: templates/envio/matricula_index.html:27
 msgid "No hay matrículas en la base de datos"
-msgstr "No tuitions found in database"
+msgstr "No hay matrículas en la base de datos"
 
 #: templates/envio/persona_detail.html:21 templates/envio/persona_index.html:15
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #: templates/envio/persona_detail.html:25
 msgid "Matriculado en"
-msgstr "Enrolled in"
+msgstr "Matriculado en"
 
 #: templates/envio/persona_form.html:13
 msgid "Guardar"
-msgstr ""
+msgstr "Guardar"
 
 #: templates/envio/persona_index.html:27
 msgid "No hay personas en la base de datos"
-msgstr "No people found in database"
+msgstr "No hay personas en la base de datos"
 
 #: templates/envio/user_form.html:12
 msgid "Enviar"
-msgstr ""
+msgstr "Enviar"
 
 #: views.py:133
 msgid "No hay matriculas disponibles"
-msgstr "No tuitions found in database"
+msgstr "No hay matriculas disponibles"

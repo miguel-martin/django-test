@@ -1,0 +1,23 @@
+2019-02-08 18:40:21.762 CET [34819] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-02-08 18:40:21.762 CET [34819] LOG:  listening on IPv6 address "::1", port 5432
+2019-02-08 18:40:21.763 CET [34819] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-02-08 18:40:21.790 CET [34820] LOG:  database system was shut down at 2019-02-08 18:40:15 CET
+2019-02-08 18:40:21.798 CET [34819] LOG:  database system is ready to accept connections
+2019-02-11 08:13:07.113 CET [34829] ERROR:  syntax error at or near "drop" at character 23
+2019-02-11 08:13:07.113 CET [34829] STATEMENT:  drop database django2
+	drop database djangotest2
+	drop database djangotest2;
+2019-02-11 08:13:31.875 CET [34819] LOG:  received fast shutdown request
+2019-02-11 08:13:31.876 CET [34819] LOG:  aborting any active transactions
+2019-02-11 08:13:31.878 CET [34833] FATAL:  terminating connection due to administrator command
+2019-02-11 08:13:31.878 CET [34832] FATAL:  terminating connection due to administrator command
+2019-02-11 08:13:31.879 CET [34819] LOG:  background worker "logical replication launcher" (PID 34826) exited with exit code 1
+2019-02-11 08:13:31.882 CET [34821] LOG:  shutting down
+2019-02-11 08:13:31.900 CET [34819] LOG:  database system is shut down
+2019-02-11 08:13:41.130 CET [38293] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-02-11 08:13:41.131 CET [38293] LOG:  listening on IPv6 address "::1", port 5432
+2019-02-11 08:13:41.132 CET [38293] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-02-11 08:13:41.158 CET [38294] LOG:  database system was shut down at 2019-02-11 08:13:31 CET
+2019-02-11 08:13:41.164 CET [38293] LOG:  database system is ready to accept connections
+2019-02-11 08:15:25.135 CET [38322] ERROR:  column "memoria" contains null values
+2019-02-11 08:15:25.135 CET [38322] STATEMENT:  ALTER TABLE "envio_entrega" ADD COLUMN "memoria" varchar(100) NOT NULL
