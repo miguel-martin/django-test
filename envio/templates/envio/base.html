@@ -65,26 +65,28 @@
       </div>
     </div>
   </div>
-  <footer class="fixed-bottom bg-light">
-    <div class="float-left size-1">&copy; Universidad de Zaragoza - Servicio de Informática y Comunicaciones</div>
-    <div class="float-right">
-        <!-- language selector -->
-        <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
-        <input name="next" type="hidden" value="{{ redirect_to }}">
-        <select name="language">
-            {% get_current_language as LANGUAGE_CODE %}
-            {% get_available_languages as LANGUAGES %}
-            {% get_language_info_list for LANGUAGES as languages %}
-            {% for language in languages %}
-                <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
-                    {{ language.name_local }} ({{ language.code }})
-                </option>
-            {% endfor %}
-        </select>
-        <!-- actualmente tienes seleccionado el idioma {{ LANGUAGE_CODE }} -->
-        <input type="submit" value='{% trans "Go" %}'>
-        </form>
-         <!-- end language selector -->
+  <footer class="page-footer font-small pt-4 bg-light">
+    <div class="container-fluid text-center text-md-left">
+      <div class="float-left size-1">&copy; Universidad de Zaragoza - Servicio de Informática y Comunicaciones</div>
+      <div class="float-right">
+          <!-- language selector -->
+          <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+          <input name="next" type="hidden" value="{{ redirect_to }}">
+          <select name="language">
+              {% get_current_language as LANGUAGE_CODE %}
+              {% get_available_languages as LANGUAGES %}
+              {% get_language_info_list for LANGUAGES as languages %}
+              {% for language in languages %}
+                  <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                      {{ language.name_local }} ({{ language.code }})
+                  </option>
+              {% endfor %}
+          </select>
+          <!-- actualmente tienes seleccionado el idioma {{ LANGUAGE_CODE }} -->
+          <input type="submit" value='{% trans "Cambiar" %}'>
+          </form>
+           <!-- end language selector -->
+      </div>
     </div>
   </footer>
 </body>

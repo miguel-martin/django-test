@@ -77,6 +77,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media', # To access the MEDIA_URL in templates
             ],
         },
     },
@@ -168,3 +169,7 @@ LOGOUT_REDIRECT_URL = 'index'
 LOGIN_REDIRECT_URL = 'index'
 
 INTERNAL_IPS = ['127.0.0.1']
+
+# Media uploads
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

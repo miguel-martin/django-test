@@ -7,6 +7,7 @@ from django.utils.translation import gettext as _
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+
 # Create your models here.
 
 class Centro(models.Model):

@@ -1,6 +1,7 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, Textarea
 from .models import Entrega, Persona
 from django.contrib.auth.models import User
+from django.utils.translation import gettext as _
 
 class EntregaForm(ModelForm):
     """ Modela un formulario para realizar Entregas """
@@ -11,11 +12,14 @@ class EntregaForm(ModelForm):
 
     class Meta:
         model = Entrega
-        fields = ['matricula', 'titulo', 'resumen']
+        fields = ['matricula', 'titulo', 'resumen', 'memoria', 'anexos']
+        widgets = {'resumen': Textarea(attrs={'cols': 80, 'rows': 20})}
         labels={
-            'matricula':' Estudio',
-            'titulo': 'Título de tu Trabajo',
-            'resumen': 'Resumen (ES)',
+            'matricula': _('Estudio'),
+            'titulo': _('Título de tu Trabajo'),
+            'resumen': _('Resumen (ES)'),
+            'memoria': _('Memoria'),
+            'anexos': _('Anexos'),
         }
 
 

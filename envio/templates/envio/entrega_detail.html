@@ -1,4 +1,5 @@
 {% extends "envio/base.html" %}
+{% load i18n %} 
 
 {% block titulo %}
     <h1> {{ entrega }} </h1>
@@ -23,6 +24,14 @@
         <tr>
           <th>RESUMEN</th>
             <td>{{ entrega.resumen }}</td>
+        </tr>
+        <tr>
+          <th>MEMORIA</th>
+            <td><a href="{{MEDIA_URL}}/{{ entrega.memoria }}"><i class="far fa-eye"></i> {% trans "Ver/Descargar" %}</a></td>
+        </tr>
+        <tr>
+          <th>ANEXOS</th>
+            <td>{{ entrega.anexos }}</td>
         </tr>
     </tbody>
 </table>

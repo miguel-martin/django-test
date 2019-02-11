@@ -117,7 +117,7 @@ def edit_or_create_Entrega(request):
 	""" Muestra el form para realizar entregas """
 	if request.method == "POST":
 		# create form instance and populate it with data from the request
-		form = EntregaForm(request.POST)
+		form = EntregaForm(request.POST, request.FILES)
 		if form.is_valid():
 			# ToDo procesar
 			nueva_entrega = form.save()
