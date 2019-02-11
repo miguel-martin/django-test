@@ -134,71 +134,77 @@ def user_upload_memoria_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/trabajos-depositados/user_<id>/<filename>
     return 'trabajos-depositados/user_{0}/memoria-{1}'.format(instance.matricula.persona.user.id, filename)
 
+
+
 class Entrega(models.Model):
     """ Modela las Entregas de trabajos que realiza una Persona """
 
     tid = models.AutoField(_('Código de entrega'), primary_key=True)
     titulo = models.CharField(max_length=500)
     resumen = models.CharField(max_length=5000)
+    resumen_en = models.CharField(max_length=5000)
+    notas = models.CharField(max_length=5000, null=True, blank=True)
+    #Todo keywords as manytomanyfield?
+    #ToDo director(es)
+    #ToDo director(es) delegado(s)
+    #Todo departamento as manytomanyfield
+    #ToDo license public or restricted
+    #ToDo acept terms of use
     matricula = models.ForeignKey(Matricula, on_delete=models.CASCADE)
     fecha = models.DateTimeField(auto_now=True)
     memoria = models.FileField(upload_to=user_upload_memoria_directory_path)
     anexos = models.FileField(null=True, blank=True, upload_to=user_upload_anexos_directory_path)
+    entrega_material_adicional = models.BooleanField(default=False)
     
     def __str__(self):
         return(_("{} - Entrega {} del alumno {}").format(self.fecha, self.tid, self.matricula.persona))
-
-    @receiver(models.signals.post_delete)
-    def auto_delete_file_on_delete(sender, instance, **kwargs):
-        """
-        Deletes file from filesystem
-        when corresponding 'Entrega' object is deleted.
-        """
-        if instance.memoria:
-            if os.path.isfile(instance.memoria.path):
-                os.remove(instance.memoria.path)
-        if instance.anexos:
-            if os.path.isfile(instance.anexos.path):
-                os.remove(instance.anexos.path)
-
-    @receiver(models.signals.pre_save)
-    def auto_delete_file_on_change(sender, instance, **kwargs):
-        """
-        Deletes old file from filesystem
-        when corresponding 'Entrega' object is updated
-        with new file.
-        """
-        if not instance.pk:
-            return False
-
-        # borrado de memoria...
-        try:
-            old_memoria = Entrega.objects.get(pk=instance.pk).memoria
-        except Entrega.DoesNotExist:
-            return False
-
-        new_memoria = instance.memoria
-        if not old_memoria == new_memoria:
-            if os.path.isfile(old_memoria.path):
-                os.remove(old_memoria.path)
-
-        # borrado de anexos...
-        try:
-            old_anexos = Entrega.objects.get(pk=instance.pk).anexos
-        except Entrega.DoesNotExist:
-            return False
-
-        new_anexos = instance.anexos
-        if not old_anexos == new_anexos:
-            if os.path.isfile(old_anexos.path):
-                os.remove(old_anexos.path)
-
 
     class Meta:
         verbose_name = _('Entrega')
         verbose_name_plural = _('Entregas')
 
-
+@receiver(models.signals.post_delete, sender=Entrega)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+    """
+    Deletes file from filesystem
+    when corresponding 'Entrega' object is deleted.
+    Refactor? Perhaps it would be better to use django-cleanup https://github.com/un1t/django-cleanup
+    """
+    if instance.memoria:
+        if os.path.isfile(instance.memoria.path):
+            os.remove(instance.memoria.path)
+    if instance.anexos:
+        if os.path.isfile(instance.anexos.path):
+            os.remove(instance.anexos.path)
+            
+@receiver(models.signals.pre_save, sender=Entrega)
+def auto_delete_file_on_change(sender, instance, **kwargs):
+    """
+    Deletes old file from filesystem
+    when corresponding 'Entrega' object is updated
+    with new file.
+    Refactor? Perhaps it would be better to use django-cleanup https://github.com/un1t/django-cleanup
+    """
+    if not instance.pk:
+        return False
+    # borrado de memoria...
+    try:
+        old_memoria = Entrega.objects.get(pk=instance.pk).memoria
+    except Entrega.DoesNotExist:
+        return False
+    new_memoria = instance.memoria
+    if not old_memoria == new_memoria:
+        if os.path.isfile(old_memoria.path):
+            os.remove(old_memoria.path)
+    # borrado de anexos...
+    try:
+        old_anexos = Entrega.objects.get(pk=instance.pk).anexos
+    except Entrega.DoesNotExist:
+        return False
+    new_anexos = instance.anexos
+    if not old_anexos == new_anexos:
+        if os.path.isfile(old_anexos.path):
+            os.remove(old_anexos.path)
 
 
 
