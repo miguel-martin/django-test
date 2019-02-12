@@ -18,7 +18,10 @@
            </thead>
          {% for e in entregas %}
              <tr>
-              <td><a href="{% url 'list_entrega' e.tid %}"><i class="far fa-eye"></i></td>
+              <td>
+                <a href="{% url 'list_entrega' e.tid %}"><i class="far fa-eye"></i>
+                <a href="{% url 'edit_create_entrega' e.tid %}"><i class="far fa-edit"></i>
+              </td>
               <td>{{ e.fecha }}</td>
              	<td>{{ e.matricula.persona }}</td>
              	<td>{{ e.matricula.plan }}</td>

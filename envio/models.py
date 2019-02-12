@@ -183,6 +183,7 @@ def auto_delete_file_on_change(sender, instance, **kwargs):
     Deletes old file from filesystem
     when corresponding 'Entrega' object is updated
     with new file.
+    This function assumes that EVERY entrega has a mandatory 'memoria' field!!
     Refactor? Perhaps it would be better to use django-cleanup https://github.com/un1t/django-cleanup
     """
     if not instance.pk:
@@ -193,16 +194,22 @@ def auto_delete_file_on_change(sender, instance, **kwargs):
     except Entrega.DoesNotExist:
         return False
     new_memoria = instance.memoria
-    if not old_memoria == new_memoria:
+    if new_memoria and not old_memoria == new_memoria:
         if os.path.isfile(old_memoria.path):
             os.remove(old_memoria.path)
+    
     # borrado de anexos...
+    old_anexos = None
     try:
         old_anexos = Entrega.objects.get(pk=instance.pk).anexos
     except Entrega.DoesNotExist:
         return False
+    # if there were NO old_anexos, no need to do nothing...
+    if not old_anexos:
+        return True
+    # if there were old_anexos, remove them... 
     new_anexos = instance.anexos
-    if not old_anexos == new_anexos:
+    if new_anexos and not old_anexos == new_anexos:
         if os.path.isfile(old_anexos.path):
             os.remove(old_anexos.path)
 

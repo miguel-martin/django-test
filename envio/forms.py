@@ -9,7 +9,7 @@ class EntregaForm(ModelForm):
     #def __init__(self, request, *args, **kwargs):
     #    super(Entrega_Form, self).__init__(*args, **kwargs)
     #    self.fields['matricula'].queryset =  Matricula.objects.filter(nip=request.nip)
-
+    
     class Meta:
         model = Entrega
         fields = ['matricula', 'titulo', 'resumen', 'notas', 'entrega_material_adicional', 'memoria', 'anexos']
@@ -31,8 +31,3 @@ class UserForm(ModelForm):
     class Meta:
         model = User
         fields = ['email', 'password']
-
-#class PersonaForm(ModelForm):
-#    class Meta:
-#        model = Persona
-#        fields = ('nip', 'planes')

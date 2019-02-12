@@ -4,6 +4,23 @@
     <h1> AÑADIR / MODIFICAR ENTREGA </h1>
 {% endblock %}
 
+{% if form.errors %}
+    {% block avisos %}
+        {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endblock %}
+{% endif %}
+
 {% block content %}
 <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}

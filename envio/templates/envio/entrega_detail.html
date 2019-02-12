@@ -2,7 +2,8 @@
 {% load i18n %} 
 
 {% block titulo %}
-    <h1> {{ entrega }} </h1>
+    <h1> {{ entrega.titulo }} </h1>
+    <a href="{% url 'edit_create_entrega' entrega.tid %}"><i class="far fa-edit"></i>{% trans "Editar" %}</a>
 {% endblock %}
 
 {% block content %}
@@ -27,11 +28,19 @@
         </tr>
         <tr>
           <th>{% trans "Memoria" %}</th>
-            <td><a href="{{MEDIA_URL}}{{ entrega.memoria }}"><i class="far fa-eye"></i> {% trans "Ver Memoria" %}</a></td>
+            <td>
+              {% if entrega.memoria %}
+              <a href="{{MEDIA_URL}}{{ entrega.memoria }}"><i class="far fa-eye"></i> {% trans "Ver Memoria" %}</a>
+              {% endif %}
+            </td>
         </tr>
         <tr>
           <th>{% trans "Anexos" %}</th>
-            <td><a href="{{MEDIA_URL}}{{ entrega.anexos }}"><i class="far fa-eye"></i> {% trans "Ver Anexos" %}</a></td>
+            <td>
+              {% if entrega.anexos %}
+              <a href="{{MEDIA_URL}}{{ entrega.anexos }}"><i class="far fa-eye"></i> {% trans "Ver Anexos" %}</a>
+              {% endif %}
+            </td>
         </tr>
     </tbody>
 </table>

@@ -10,7 +10,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.utils.translation import gettext as _
 
 
-
 def index(request):
     """ Renders a sample index page """
     return render(request, 'envio/index.html', {'contents': 'Use la barra superior para navegar', 'titlepag': 'Gestión de Trabajos'})
@@ -113,29 +112,46 @@ class EntregaDetailView(generic.DetailView):
 
 
 @login_required
-def edit_or_create_Entrega(request):
-	""" Muestra el form para realizar entregas """
-	if request.method == "POST":
+def edit_or_create_Entrega(request, pk=None):
+	""" Shows the form to create/edit Entrega's """
+	if request.method == "POST" and not pk:
 		# create form instance and populate it with data from the request
 		form = EntregaForm(request.POST, request.FILES)
 		if form.is_valid():
-			# ToDo procesar
 			nueva_entrega = form.save()
-			# redirigir
 			return HttpResponseRedirect(reverse('list_all_entregas'))
-	else:
-		# if a GET (or any other method) we'll create a blank form
-		# we'll limit the Matricula choices to the ones that correspond to that nip
+	elif request.method == "POST" and pk:
+		# create form instance and populate it with data from the request AND the existing Entrega
+		e = get_object_or_404(Entrega,pk=pk)
+		if not e.matricula.persona.user==request.user:
+			return render(request, 'envio/base.html', {'avisos': _("Solo puedes editar tus propias Entregas")})
+		else:
+			form = EntregaForm(request.POST, request.FILES, instance=e)
+			if form.is_valid():
+				edit_entrega = form.save()
+				return HttpResponseRedirect(reverse('list_all_entregas'))
+	elif not pk:
+		# if a GET (or any other method) and no pk is provided, we'll create a blank form
 		form = EntregaForm()
-		#matriculas = get_list_or_404(Matricula, persona__user=request.user)
+
+		# we'll limit the Matricula choices to the ones that correspond to that nip
 		matriculas = Matricula.objects.filter(persona__user=request.user)
 		if not matriculas:
 			return render(request,'envio/base.html', {'avisos': _("No hay matriculas disponibles")})
+		
 		# if matriculas available, proceed...
 		matriculas_filtered_choices = []
 		for matricula in matriculas:
 			matriculas_filtered_choices.append([matricula.pk, matricula.get_nombre_estudio()])
 		form.fields['matricula'].choices = matriculas_filtered_choices
+	else:
+		# if GET (or any other method) and pk is provided, we'll fill the form with the existing
+		# entrega object value, if it exists and it belongs to the user
+		e = get_object_or_404(Entrega,pk=pk)
+		if not e.matricula.persona.user==request.user:
+			return render(request, 'envio/base.html', {'avisos': _("Solo puedes editar tus propias Entregas")})
+		else:
+			form = EntregaForm(instance=e)
 
 	return render(request, 'envio/entrega_form.html', {'form': form})
 
