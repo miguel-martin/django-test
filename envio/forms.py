@@ -13,10 +13,9 @@ class EntregaForm(ModelForm):
     
     terminos = forms.BooleanField(required=True, help_text=_('Debes aceptar los Términos y Condiciones para poder realizar la Entrega'))
     
-
     class Meta:
         model = Entrega
-        fields = ['matricula', 'titulo', 'resumen', 'notas', 'entrega_material_adicional', 'memoria', 'anexos']
+        fields = ['matricula', 'titulo', 'resumen', 'notas', 'departamentos', 'entrega_material_adicional', 'memoria', 'anexos', 'license']
         widgets = {'resumen': Textarea(attrs={'cols': 80, 'rows': 15}),
                    'notas': Textarea(attrs={'cols': 80, 'rows': 10})
                 }
@@ -28,7 +27,9 @@ class EntregaForm(ModelForm):
             'anexos': _('Anexos'),
             'entrega_material_adicional': _('Entrega material adicional'),
             'notas': _('Notas'),
+            'departamentos': _('Departamento(s)'),
             'terminos': _('Términos y condiciones'),
+            'license': _('Licencia'),
         }
 
 

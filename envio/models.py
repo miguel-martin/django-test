@@ -135,9 +135,22 @@ def user_upload_memoria_directory_path(instance, filename):
     return 'trabajos-depositados/user_{0}/memoria-{1}'.format(instance.matricula.persona.user.id, filename)
 
 
+class Departamento(models.Model):
+    """ Modela los Departamentos de la UZ """
+
+    did = models.IntegerField(_('Código del Departamento'), primary_key=True)
+    nombre = models.CharField(max_length=5000)
+
+    def __str__(self):
+        return self.nombre
 
 class Entrega(models.Model):
     """ Modela las Entregas de trabajos que realiza una Persona """
+
+    LICENSE_CHOICES = ( 
+        (0, _('No autoriza consulta pública')),
+        (1, _('Autoriza consulta pública')),
+    )
 
     tid = models.AutoField(_('Código de entrega'), primary_key=True)
     titulo = models.CharField(max_length=500)
@@ -147,8 +160,8 @@ class Entrega(models.Model):
     #Todo keywords as manytomanyfield?
     #ToDo director(es)
     #ToDo director(es) delegado(s)
-    #Todo departamento as manytomanyfield
-    #ToDo license public or restricted
+    departamentos = models.ManyToManyField(Departamento)
+    license = models.IntegerField(choices=LICENSE_CHOICES, default=0)
     matricula = models.ForeignKey(Matricula, on_delete=models.CASCADE)
     fecha = models.DateTimeField(auto_now=True)
     memoria = models.FileField(upload_to=user_upload_memoria_directory_path)

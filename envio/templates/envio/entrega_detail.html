@@ -38,6 +38,15 @@
                 {% trans "No" %}
               {% endif %}
             </td>
+        </tr> 
+        <tr>
+          <th>{% trans "Departamento(s)" %}</th>
+            <td>{{ entrega.departamentos.all|join:"<br />"  }}</td>
+        </tr>
+        <tr>
+        <tr>
+          <th>{% trans "Licencia" %}</th>
+            <td>{{ entrega.get_license_display }}</td>
         </tr>
         <tr>
           <th>{% trans "Memoria" %}</th>
