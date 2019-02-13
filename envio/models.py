@@ -149,7 +149,7 @@ class Entrega(models.Model):
     #ToDo director(es) delegado(s)
     #Todo departamento as manytomanyfield
     #ToDo license public or restricted
-    terminos = models.BooleanField(default=False)
+    terminos = models.BooleanField(default=False, blank=False, help_text=_('Debes aceptar los Términos y Condiciones para poder realizar la Entrega'))
     matricula = models.ForeignKey(Matricula, on_delete=models.CASCADE)
     fecha = models.DateTimeField(auto_now=True)
     memoria = models.FileField(upload_to=user_upload_memoria_directory_path)

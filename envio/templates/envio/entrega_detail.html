@@ -4,8 +4,8 @@
 {% block titulo %}
     <h1> {{ entrega.titulo }} </h1>
     <a href="{% url 'edit_create_entrega' entrega.tid %}"><i class="far fa-edit"></i>{% trans "Editar" %}</a>
-    <a href="#" onclick="confirmar('¿Seguro que deseas borrar?','{% url 'delete_entrega' e.tid %}');">
-        <i class="fa fa-trash"></i>
+    <a href="#" onclick="confirmar('¿Seguro que deseas borrar?','{% url 'delete_entrega' entrega.tid %}');">
+        <i class="fa fa-trash"></i>{% trans "Borrar" %}
     </a> 
 {% endblock %}
 
