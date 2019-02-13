@@ -23,6 +23,7 @@ urlpatterns = [
     path('entregas/', views.EntregaIndexView.as_view(), name='list_all_entregas'),
     path('entregas/<int:pk>/', views.EntregaDetailView.as_view(), name='list_entrega'),
     path('entregas/<int:pk>/editar/', views.edit_or_create_Entrega, name='edit_create_entrega'),
+    path('entregas/<int:pk>/borrar/', views.delete_Entrega, name='delete_entrega'),
     path('entregas/nueva/', views.edit_or_create_Entrega, name='edit_create_entrega'),
     path('micuenta/', views.user_view, name='micuenta'),
     path('login/', auth_views.LoginView.as_view(template_name='envio/login.html'), name='login'),

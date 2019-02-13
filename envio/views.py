@@ -110,6 +110,16 @@ class EntregaDetailView(generic.DetailView):
 	model = Entrega
 	template_name = 'envio/entrega_detail.html'
 
+@login_required
+def delete_Entrega(request, pk):
+	""" Deletes the Entrega, if exists and belongs to the user """
+	e = get_object_or_404(Entrega, pk=pk)
+	if not e.matricula.persona.user == request.user:
+		return render(request, 'envio/base.html', {'avisos': _("Solo puedes borrar tus propias Entregas")})
+	# if Entrega exists and belongs to the user...
+	e.delete()
+	return HttpResponseRedirect(reverse('list_all_entregas'))
+
 
 @login_required
 def edit_or_create_Entrega(request, pk=None):

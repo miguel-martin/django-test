@@ -149,7 +149,7 @@ class Entrega(models.Model):
     #ToDo director(es) delegado(s)
     #Todo departamento as manytomanyfield
     #ToDo license public or restricted
-    #ToDo acept terms of use
+    terminos = models.BooleanField(default=False)
     matricula = models.ForeignKey(Matricula, on_delete=models.CASCADE)
     fecha = models.DateTimeField(auto_now=True)
     memoria = models.FileField(upload_to=user_upload_memoria_directory_path)
@@ -180,15 +180,13 @@ def auto_delete_file_on_delete(sender, instance, **kwargs):
 @receiver(models.signals.pre_save, sender=Entrega)
 def auto_delete_file_on_change(sender, instance, **kwargs):
     """
-    Deletes old file from filesystem
-    when corresponding 'Entrega' object is updated
-    with new file.
+    Deletes old file from filesystem when corresponding 'Entrega' object is updated with new file.
     This function assumes that EVERY entrega has a mandatory 'memoria' field!!
     Refactor? Perhaps it would be better to use django-cleanup https://github.com/un1t/django-cleanup
     """
     if not instance.pk:
         return False
-    # borrado de memoria...
+
     try:
         old_memoria = Entrega.objects.get(pk=instance.pk).memoria
     except Entrega.DoesNotExist:
@@ -198,7 +196,6 @@ def auto_delete_file_on_change(sender, instance, **kwargs):
         if os.path.isfile(old_memoria.path):
             os.remove(old_memoria.path)
     
-    # borrado de anexos...
     old_anexos = None
     try:
         old_anexos = Entrega.objects.get(pk=instance.pk).anexos

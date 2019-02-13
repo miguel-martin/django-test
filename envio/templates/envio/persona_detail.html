@@ -33,7 +33,17 @@
           <th>{% trans "Entregas" %}</th>
           <td>
             {% for e in persona.get_entregas %}
-                <a href="{% url 'list_entrega' e.tid %}"><i class="far fa-eye"></i></a> - {{ e }}<br />
+                <a href="{% url 'list_entrega' e.tid %}">
+                  <i class="far fa-eye"></i>
+                </a> 
+                <a href="{% url 'edit_create_entrega' e.tid %}">
+                  <i class="far fa-edit"></i>
+                </a>
+                <a href="#" onclick="confirmar('¿Seguro que deseas borrar?','{% url 'delete_entrega' e.tid %}');">
+                  <i class="fa fa-trash"></i>
+                </a> 
+                {{ e }}
+                       <br />
             {% endfor %}
           </td>
         </tr>
