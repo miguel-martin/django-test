@@ -2,6 +2,7 @@ from django.forms import ModelForm, Textarea
 from .models import Entrega, Persona
 from django.contrib.auth.models import User
 from django.utils.translation import gettext as _
+from django import forms
 
 class EntregaForm(ModelForm):
     """ Modela un formulario para realizar Entregas """
@@ -10,9 +11,12 @@ class EntregaForm(ModelForm):
     #    super(Entrega_Form, self).__init__(*args, **kwargs)
     #    self.fields['matricula'].queryset =  Matricula.objects.filter(nip=request.nip)
     
+    terminos = forms.BooleanField(required=True, help_text=_('Debes aceptar los Términos y Condiciones para poder realizar la Entrega'))
+    
+
     class Meta:
         model = Entrega
-        fields = ['matricula', 'titulo', 'resumen', 'notas', 'entrega_material_adicional', 'memoria', 'anexos', 'terminos']
+        fields = ['matricula', 'titulo', 'resumen', 'notas', 'entrega_material_adicional', 'memoria', 'anexos']
         widgets = {'resumen': Textarea(attrs={'cols': 80, 'rows': 15}),
                    'notas': Textarea(attrs={'cols': 80, 'rows': 10})
                 }

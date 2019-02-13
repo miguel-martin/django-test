@@ -19,7 +19,7 @@
         </tr>
         <tr>
           <th>{% trans "Alumno" %}</th>
-            <td>{{ entrega.matricula.persona.nombre }} {{ entrega.matricula.persona.apellidos }}</td>
+            <td>{{ entrega.matricula.persona.user.first_name }} {{ entrega.matricula.persona.user.last_name }}</td>
         </tr>
         <tr>
           <th>{% trans "Título" %}</th>
@@ -28,6 +28,16 @@
         <tr>
           <th>{% trans "Resumen" %}</th>
             <td>{{ entrega.resumen }}</td>
+        </tr>
+        <tr>
+          <th>{% trans "Entrega especial" %}</th>
+            <td>
+              {% if entrega.entrega_material_adicional %}
+                {% trans "Sí" %}
+              {% else %}
+                {% trans "No" %}
+              {% endif %}
+            </td>
         </tr>
         <tr>
           <th>{% trans "Memoria" %}</th>
