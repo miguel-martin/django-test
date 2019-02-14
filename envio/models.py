@@ -9,6 +9,7 @@ from django.dispatch import receiver
 
 import os
 from django.utils.text import slugify
+from private_storage.fields import PrivateFileField # refer to https://github.com/edoburu/django-private-storage
 
 # Create your models here.
 
@@ -134,16 +135,22 @@ class Departamento(models.Model):
     def __str__(self):
         return self.nombre
 
+def get_extension(filename):
+    return os.path.splitext(filename)[1]
+
 def user_upload_anexos_directory_path(instance, filename):
     """ Returns a path where the file will be saved """
     # file will be uploaded to MEDIA_ROOT/trabajos-depositados/user_<id>/<filename>
-    return 'trabajos-depositados/user_{0}/anexos-{1}'.format(instance.matricula.persona.user.id, slugify(filename))
+    return 'trabajos-depositados/user_{0}/anexos-{1}{2}'.format(instance.matricula.persona.user.id, slugify(filename), get_extension(filename))
 
 def user_upload_memoria_directory_path(instance, filename):
     """ Returns a path where the file will be saved """
     # file will be uploaded to MEDIA_ROOT/trabajos-depositados/user_<id>/<filename>
-    return 'trabajos-depositados/user_{0}/memoria-{1}'.format(instance.matricula.persona.user.id, slugify(filename))
+    return 'trabajos-depositados/user_{0}/memoria-{1}{2}'.format(instance.matricula.persona.user.id, slugify(filename), get_extension(filename))
 
+def user_private_upload_path(instance):
+    """ Returns a subpath where the file will be saved """
+    return 'user_{0}'.format(instance.matricula.persona.user.id)
 
 class Entrega(models.Model):
     """ Modela las Entregas de trabajos que realiza una Persona """
@@ -167,6 +174,8 @@ class Entrega(models.Model):
     fecha = models.DateTimeField(auto_now=True)
     memoria = models.FileField(upload_to=user_upload_memoria_directory_path)
     anexos = models.FileField(null=True, blank=True, upload_to=user_upload_anexos_directory_path)
+    ficheroprivado = PrivateFileField("Fichero_privado", null=True, blank=True, upload_subfolder=user_private_upload_path)
+    # refer to https://github.com/edoburu/django-private-storage
     entrega_material_adicional = models.BooleanField(default=False)
     
     def __str__(self):
@@ -179,7 +188,7 @@ class Entrega(models.Model):
 @receiver(models.signals.post_delete, sender=Entrega)
 def auto_delete_file_on_delete(sender, instance, **kwargs):
     """
-    Deletes file from filesystem
+     q
     when corresponding 'Entrega' object is deleted.
     Refactor? Perhaps it would be better to use django-cleanup https://github.com/un1t/django-cleanup
     """

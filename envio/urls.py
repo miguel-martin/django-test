@@ -2,6 +2,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
+import private_storage.urls # refer to https://github.com/edoburu/django-private-storage
 
 from . import views
 
@@ -29,7 +30,11 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='envio/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('i18n/', include('django.conf.urls.i18n'), name='set_language'), # refer to https://docs.djangoproject.com/en/2.2/topics/i18n/translation/#set-language-redirect-view
+    path('descargar-privado/<int:pk>', views.MyDocumentDownloadView.as_view(), name='download-private'), # refer to https://github.com/edoburu/django-private-storage
 ]
+
+# To add private files (refer to https://django-private-files.readthedocs.io/en/latest/)
+urlpatterns += [path('private-media/', include('private_storage.urls'))]
 
 # To add debug bar. refer to https://django-debug-toolbar.readthedocs.io/en/latest/installation.html
 if settings.DEBUG:

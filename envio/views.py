@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.contrib.auth import authenticate, login, logout
 from django.utils.translation import gettext as _
+from private_storage.views import PrivateStorageDetailView
 
 
 def index(request):
@@ -109,6 +110,26 @@ class EntregaDetailView(generic.DetailView):
 	""" Lista la entrega, si existe """ 
 	model = Entrega
 	template_name = 'envio/entrega_detail.html'
+
+class MyDocumentDownloadView(PrivateStorageDetailView):
+    model = Entrega
+    model_file_field = 'ficheroprivado'
+
+    #FIXME
+    #def get_queryset(self):
+    #    if self.request.user.is_anonymous:
+    #        return None
+    #    # Make sure only certain objects can be accessed.
+    #    # Filter only the files that belong to that entrega and belong to self.request.user
+    #    return super().get_queryset().filter(matricula__persona__user=self.request.user) 
+
+    def can_access_file(self, private_file):
+        # When the object can be accessed, the file may be downloaded.
+        # This overrides PRIVATE_STORAGE_AUTH_FUNCTION. This should return 
+        #     True if user should not be able to download of
+        #     False if user should not be able to download
+        return (not self.request.user.is_anonymous) and self.request.user.is_authenticated # and self.request.pk == request.user.pk
+        #return True
 
 @login_required
 def delete_Entrega(request, pk):

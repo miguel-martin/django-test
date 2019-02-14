@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar', #refer to https://django-debug-toolbar.readthedocs.io/en/latest/installation.html
+    'private_storage', #refer to https://github.com/edoburu/django-private-storage
     'envio',
 ]
 
@@ -173,3 +174,7 @@ INTERNAL_IPS = ['127.0.0.1']
 # Media uploads
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# For private storage. Refer to https://github.com/edoburu/django-private-storage
+PRIVATE_STORAGE_ROOT = 'private-media/'
+PRIVATE_STORAGE_AUTH_FUNCTION = 'private_storage.permissions.allow_staff'

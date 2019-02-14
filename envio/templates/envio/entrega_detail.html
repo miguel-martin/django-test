@@ -62,6 +62,14 @@
               <a href="{{MEDIA_URL}}{{ entrega.anexos }}"><i class="far fa-eye"></i> {% trans "Ver Anexos" %}</a>
               {% endif %}
             </td>
+        </tr>        
+        <tr>
+          <th>{% trans "Fichero privado (pruebas)" %}</th>
+            <td>
+              {% if entrega.ficheroprivado %}
+              <a href="{% url 'download-private' entrega.tid %}"><i class="far fa-eye"></i> {% trans "Ver Ficheroprivado" %}</a>
+              {% endif %}
+            </td>
         </tr>
     </tbody>
 </table>
