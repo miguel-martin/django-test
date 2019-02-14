@@ -8,6 +8,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 import os
+from django.utils.text import slugify
 
 # Create your models here.
 
@@ -124,17 +125,6 @@ class Matricula(models.Model):
         return self.plan.estudio.nombre
 
 
-def user_upload_anexos_directory_path(instance, filename):
-    """ Returns a path where the file will be saved """
-    # file will be uploaded to MEDIA_ROOT/trabajos-depositados/user_<id>/<filename>
-    return 'trabajos-depositados/user_{0}/anexos-{1}'.format(instance.matricula.persona.user.id, filename)
-
-def user_upload_memoria_directory_path(instance, filename):
-    """ Returns a path where the file will be saved """
-    # file will be uploaded to MEDIA_ROOT/trabajos-depositados/user_<id>/<filename>
-    return 'trabajos-depositados/user_{0}/memoria-{1}'.format(instance.matricula.persona.user.id, filename)
-
-
 class Departamento(models.Model):
     """ Modela los Departamentos de la UZ """
 
@@ -143,6 +133,17 @@ class Departamento(models.Model):
 
     def __str__(self):
         return self.nombre
+
+def user_upload_anexos_directory_path(instance, filename):
+    """ Returns a path where the file will be saved """
+    # file will be uploaded to MEDIA_ROOT/trabajos-depositados/user_<id>/<filename>
+    return 'trabajos-depositados/user_{0}/anexos-{1}'.format(instance.matricula.persona.user.id, slugify(filename))
+
+def user_upload_memoria_directory_path(instance, filename):
+    """ Returns a path where the file will be saved """
+    # file will be uploaded to MEDIA_ROOT/trabajos-depositados/user_<id>/<filename>
+    return 'trabajos-depositados/user_{0}/memoria-{1}'.format(instance.matricula.persona.user.id, slugify(filename))
+
 
 class Entrega(models.Model):
     """ Modela las Entregas de trabajos que realiza una Persona """
