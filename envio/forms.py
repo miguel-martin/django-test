@@ -15,7 +15,7 @@ class EntregaForm(ModelForm):
     
     class Meta:
         model = Entrega
-        fields = ['matricula', 'titulo', 'resumen', 'notas', 'departamentos', 'entrega_material_adicional', 'memoria', 'anexos', 'license', 'anexos', 'ficheroprivado']
+        fields = ['matricula', 'titulo', 'resumen', 'notas', 'departamentos', 'entrega_material_adicional', 'memoria', 'anexos', 'license', 'anexos']
         widgets = {'resumen': Textarea(attrs={'cols': 80, 'rows': 15}),
                    'notas': Textarea(attrs={'cols': 80, 'rows': 10})
                 }

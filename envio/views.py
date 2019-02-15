@@ -111,26 +111,44 @@ class EntregaDetailView(generic.DetailView):
 	model = Entrega
 	template_name = 'envio/entrega_detail.html'
 
-class MyDocumentDownloadView(PrivateStorageDetailView):
-    model = Entrega
-    model_file_field = 'ficheroprivado'
+class AnexosDownloadView(PrivateStorageDetailView):
+	model = Entrega
+	model_file_field = 'anexos'
 
     #FIXME
     #def get_queryset(self):
-    #    if self.request.user.is_anonymous:
-    #        return None
     #    # Make sure only certain objects can be accessed.
     #    # Filter only the files that belong to that entrega and belong to self.request.user
-    #    return super().get_queryset().filter(matricula__persona__user=self.request.user) 
+    #    return super().get_queryset().filter(...) 
+
+	def can_access_file(self, private_file):
+		is_loggedin = (not self.request.user.is_anonymous) and self.request.user.is_authenticated
+		is_tribunal = False #ToDo
+		is_secretaria = False #ToDo
+		is_owner = self.object.matricula.persona.user.pk == private_file.request.user.pk
+		return is_loggedin and (is_owner or is_tribunal or is_secretaria)
+
+
+class MemoriaDownloadView(PrivateStorageDetailView):
+    model = Entrega
+    model_file_field = 'memoria'
+
+    #FIXME
+    #def get_queryset(self):
+    #    # Make sure only certain objects can be accessed.
+    #    # Filter only the files that belong to that entrega and belong to self.request.user
+    #    return super().get_queryset().filter(...) 
 
     def can_access_file(self, private_file):
         # When the object can be accessed, the file may be downloaded.
         # This overrides PRIVATE_STORAGE_AUTH_FUNCTION. This should return 
         #     True if user should not be able to download of
         #     False if user should not be able to download
-        return (not self.request.user.is_anonymous) and self.request.user.is_authenticated # and self.request.pk == request.user.pk
-        #return True
-
+        is_loggedin = (not self.request.user.is_anonymous) and self.request.user.is_authenticated
+        is_tribunal = False #ToDo
+        is_secretaria = False #ToDo
+        is_owner = self.object.matricula.persona.user.pk == private_file.request.user.pk
+        return is_loggedin and (is_owner or is_tribunal or is_secretaria)
 @login_required
 def delete_Entrega(request, pk):
 	""" Deletes the Entrega, if exists and belongs to the user """

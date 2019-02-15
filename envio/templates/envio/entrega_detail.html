@@ -51,7 +51,8 @@
           <th>{% trans "Memoria" %}</th>
             <td>
               {% if entrega.memoria %}
-              <a href="{{MEDIA_URL}}{{ entrega.memoria }}"><i class="far fa-eye"></i> {% trans "Ver Memoria" %}</a>
+              <!--<a href="{{MEDIA_URL}}{{ entrega.memoria }}"><i class="far fa-eye"></i> {% trans "Ver Memoria" %}</a>-->
+              <a href="{% url 'download-memoria' entrega.tid %}"><i class="far fa-eye"></i> {% trans "Ver Memoria" %}</a>
               {% endif %}
             </td>
         </tr>
@@ -59,18 +60,19 @@
           <th>{% trans "Anexos" %}</th>
             <td>
               {% if entrega.anexos %}
-              <a href="{{MEDIA_URL}}{{ entrega.anexos }}"><i class="far fa-eye"></i> {% trans "Ver Anexos" %}</a>
+              <!--<a href="{{MEDIA_URL}}{{ entrega.anexos }}"><i class="far fa-eye"></i> {% trans "Ver Anexos" %}</a>-->
+              <a href="{% url 'download-anexos' entrega.tid %}"><i class="far fa-eye"></i> {% trans "Ver Anexos" %}</a>
               {% endif %}
             </td>
         </tr>        
-        <tr>
+        <!--<tr>
           <th>{% trans "Fichero privado (pruebas)" %}</th>
             <td>
               {% if entrega.ficheroprivado %}
               <a href="{% url 'download-private' entrega.tid %}"><i class="far fa-eye"></i> {% trans "Ver Ficheroprivado" %}</a>
               {% endif %}
             </td>
-        </tr>
+        </tr>-->
     </tbody>
 </table>
 {% endblock %}

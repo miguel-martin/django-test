@@ -172,9 +172,11 @@ class Entrega(models.Model):
     license = models.IntegerField(choices=LICENSE_CHOICES, default=0)
     matricula = models.ForeignKey(Matricula, on_delete=models.CASCADE)
     fecha = models.DateTimeField(auto_now=True)
-    memoria = models.FileField(upload_to=user_upload_memoria_directory_path)
-    anexos = models.FileField(null=True, blank=True, upload_to=user_upload_anexos_directory_path)
-    ficheroprivado = PrivateFileField("Fichero_privado", null=True, blank=True, upload_subfolder=user_private_upload_path)
+    #memoria = models.FileField(upload_to=user_upload_memoria_directory_path)
+    #anexos = models.FileField(null=True, blank=True, upload_to=user_upload_anexos_directory_path)
+    memoria = PrivateFileField("Memoria", upload_subfolder=user_private_upload_path)
+    anexos = PrivateFileField("Anexos", null=True, blank=True, upload_subfolder=user_private_upload_path)
+    # ficheroprivado = PrivateFileField("Fichero_privado", null=True, blank=True, upload_subfolder=user_private_upload_path)
     # refer to https://github.com/edoburu/django-private-storage
     entrega_material_adicional = models.BooleanField(default=False)
     
