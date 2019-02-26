@@ -16,3 +16,5 @@
 .footer{}
 
 #termsandconditions{display:none; border: 1px solid #F00; background-color: #FDD; padding:20px; margin:5px; }
+
+#toggleTermsAndConditions {background:none!important;/*color:inherit;*/ color:blue;border:none; padding:0!important;font: inherit;cursor: pointer;}

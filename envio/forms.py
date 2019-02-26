@@ -1,4 +1,4 @@
-from django.forms import ModelForm, Textarea
+from django.forms import ModelForm, Textarea, TextInput
 from .models import Entrega, Persona
 from django.contrib.auth.models import User
 from django.utils.translation import gettext as _
@@ -11,14 +11,17 @@ class EntregaForm(ModelForm):
     
     class Meta:
         model = Entrega
-        fields = ['matricula', 'titulo', 'resumen', 'notas', 'departamentos', 'entrega_material_adicional', 'memoria', 'anexos', 'license', 'anexos']
+        fields = ['matricula', 'titulo', 'resumen',  'resumen_en', 'notas', 'departamentos', 'entrega_material_adicional', 'memoria', 'anexos', 'license', 'anexos']
         widgets = {'resumen': Textarea(attrs={'cols': 80, 'rows': 15}),
-                   'notas': Textarea(attrs={'cols': 80, 'rows': 10})
+                   'resumen_en': Textarea(attrs={'cols': 80, 'rows': 15}),
+                   'notas': Textarea(attrs={'cols': 80, 'rows': 10}),
+                   'titulo': TextInput(attrs={'size':80}),
                 }
         labels={
             'matricula': _('Estudio'),
             'titulo': _('Título de tu Trabajo'),
-            'resumen': _('Resumen (ES)'),
+            'resumen': _('Resumen (español)'),
+            'resumen_en': _('Resumen (inglés)'),
             'memoria': _('Memoria'),
             'anexos': _('Anexos'),
             'ficheroprivado': _('Prueba private files'),
@@ -27,6 +30,15 @@ class EntregaForm(ModelForm):
             'departamentos': _('Departamento(s)'),
             'terminos': _('Términos y condiciones'),
             'license': _('Licencia'),
+        }
+
+        help_texts={
+            'memoria': _('La memoria en formato PDF es obligatoria'),
+            'anexos': _('Los anexos en formato PDF son opcionales'),
+            'titulo': _('El título de tu trabajo. Dale un título descriptivo, no "Trabajo Fin de Grado" o "Trabajo Fin de Máster"'),
+            'matricula': _('En caso de que estés matriculado en varios estudios a la vez, elige el estudio para el que vas a realizar tu depósito'),
+            'departamentos': _('Elige uno o varios con CTRL/CMD + click'),
+            'entrega_material_adicional': _('¿Realizas una entrega física además de la electrónica?'),
         }
 
 
