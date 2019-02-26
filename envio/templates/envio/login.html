@@ -9,7 +9,7 @@
 
 {% if next %}
     {% if user.is_authenticated %}
-    <p>{% "Ya estás identificado como " %}{{ user.username }}</p>
+    <p>{% trans "Ya estás identificado como " %}{{ user.username }}</p>
     {% else %}
     <p>{% trans "Identifícate" %}</p>
     {% endif %}

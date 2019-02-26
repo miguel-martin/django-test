@@ -6,12 +6,8 @@ from django import forms
 
 class EntregaForm(ModelForm):
     """ Modela un formulario para realizar Entregas """
-
-    #def __init__(self, request, *args, **kwargs):
-    #    super(Entrega_Form, self).__init__(*args, **kwargs)
-    #    self.fields['matricula'].queryset =  Matricula.objects.filter(nip=request.nip)
     
-    terminos = forms.BooleanField(required=True, help_text=_('Debes aceptar los Términos y Condiciones para poder realizar la Entrega'))
+    terminos = forms.BooleanField(required=True, help_text=_('Debes aceptar los <button id="toggleTermsAndConditions">Términos y Condiciones</button> para poder realizar la Entrega. <div id="termsandconditions"></div>'))
     
     class Meta:
         model = Entrega
