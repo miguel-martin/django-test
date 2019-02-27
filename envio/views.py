@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from envio.models import Centro, Estudio, Plan, Persona, Matricula, Entrega
 from django.views import generic
 from django.urls import reverse
-from .forms import EntregaForm, UserForm
+from .forms import EntregaForm, UserForm, EntregasCentroForm
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.contrib.auth import authenticate, login, logout
@@ -101,6 +101,8 @@ class EntregaIndexView(generic.ListView):
 	""" Muestra informacion de todas las matriculas """
 	template_name = 'envio/entrega_index.html'
 	context_object_name = 'entregas'
+	#ordering = ['-fecha']
+	ordering = ['fecha']
 
 	def get_queryset(self):
 		""" Genera el listado de todas las matriculas por orden de sus apellidos """
@@ -210,6 +212,41 @@ def user_view(request):
     """ Muestra la información del usuario """
     persona = get_object_or_404(Persona, user=request.user)
     return render(request, 'envio/persona_detail.html', {'persona': persona})	
+
+
+#ToDo must be staff, not just logged in!
+@login_required
+def get_entregas_centro(request): 
+	""" Buscar entregas de trabajos ligados a un centro entre una fecha inicial y otra final """
+	form = EntregasCentroForm()
+	if request.method == 'POST':
+		# read form data and show results
+		form = EntregasCentroForm(request.POST)
+		if form.is_valid():
+
+			# check start date
+			if 'fecha_ini' in form.cleaned_data.keys():
+				fecha_ini = form.cleaned_data['fecha_ini']
+			else:
+				fecha_ini = None
+				errors.append(forms.ValidationError(_("Fecha inicio vacía o con formato incorrecto")))
+
+			# check end date
+			if 'fecha_fin' in form.cleaned_data.keys():
+				fecha_fin = form.cleaned_data['fecha_fin']
+			else:
+				fecha_fin = None
+				errors.append(forms.ValidationError(_("Fecha fin vacía o con formato incorrecto")))
+
+			if fecha_ini and fecha_fin:
+				entregas = Entrega.objects.filter(matricula__plan__centro = request.POST['centro']).filter(fecha__gte=fecha_ini).filter(fecha__lte=fecha_fin)
+				return render(request, 'envio/entregas_centro_form.html', {'form': form, 'entregas': entregas})  
+
+	return render(request, 'envio/entregas_centro_form.html', {'form': form})
+
+
+
+
 
 
 

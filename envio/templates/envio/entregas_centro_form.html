@@ -1,0 +1,94 @@
+{% extends "envio/base.html" %}
+
+{% block headerextras %}
+  <!-- Datepicker stuff. refer to https://github.com/xdan/datetimepicker -->
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'envio/css/jquery.datetimepicker.min.css' %}">
+  <script type="text/javascript" src="{% static 'envio/js/jquery.datetimepicker.full.min.js' %}"></script>
+
+  <!-- refer to https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html -->
+  <script type="text/javascript">
+        $(function () {
+            $("#id_fecha_ini").datetimepicker({
+              format: 'd/m/Y H:i', 
+              //format: 'Y-m-d H:i',
+            });
+            $("#id_fecha_fin").datetimepicker({
+              format: 'd/m/Y H:i',
+            });
+            // ToDo - set locale as user locale, do not hardcode!!
+            $.datetimepicker.setLocale('es');
+        });
+  </script>
+{% endblock %}
+
+{% block titulo %}
+    <h1> BUSCAR ENTREGAS </h1>
+{% endblock %}
+
+{% if form.errors %}
+    {% block avisos %}
+        {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endblock %}
+{% endif %}
+
+{% block content %}
+
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table id="form-get-entregas" class="table">
+        {{ form }}
+    </table>
+    <input type="submit" value="Enviar">
+</form>
+
+
+{% if entregas %}
+<br />
+<h3 class="text-center"> RESULTADOS DE BÚSQUEDA </h3>
+         <table class="table table-striped">
+           <thead>
+            <tr>
+              <th></th>
+              <th>FECHA ENTREGA</th>
+              <th>ALUMNO</th>
+              <th>PLAN</th>
+              <th>TITULO</th>
+            </tr>
+           </thead>
+         {% for e in entregas %}
+           {% if forloop.last %}
+             <tr class="last">
+           {% else %}
+             <tr class="notlast">
+           {% endif %}
+              <td>
+                <a href="{% url 'list_entrega' e.tid %}"><i class="far fa-eye"></i>
+                <a href="{% url 'edit_create_entrega' e.tid %}"><i class="far fa-edit"></i>
+                <a href="#" onclick="confirmar('¿Seguro que deseas borrar?','{% url 'delete_entrega' e.tid %}');">
+                  <i class="fa fa-trash"></i>
+                </a> 
+              </td>
+              <td>{{ e.fecha }}</td>
+                <td>{{ e.matricula.persona }}</td>
+                <td>{{ e.matricula.plan }}</td>
+              <td>{{ e.titulo }}</td>
+             </tr>
+         {% endfor %}
+         </table>
+     {% else %}
+         <p>No hay entregas que cumplan los criterios de búsqueda.</p>
+     {% endif %}
+
+{% endblock %}

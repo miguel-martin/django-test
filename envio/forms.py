@@ -1,5 +1,5 @@
 from django.forms import ModelForm, Textarea, TextInput
-from .models import Entrega, Persona
+from .models import Entrega, Persona, Centro
 from django.contrib.auth.models import User
 from django.utils.translation import gettext as _
 from django import forms
@@ -46,3 +46,15 @@ class UserForm(ModelForm):
     class Meta:
         model = User
         fields = ['email', 'password']
+
+
+class EntregasCentroForm(forms.Form):
+    """ Modela el formulario de recuperación de búsqueda de Entregas desde una fecha_ini a fecha_fin de un centro cid """
+
+    fecha_ini = forms.DateTimeField(input_formats=['%d/%m/%Y %H:%M'])
+    fecha_fin = forms.DateTimeField(input_formats=['%d/%m/%Y %H:%M'])
+
+    # ToDo limitar los centro(s) de los que el usuario sea administrador
+    centro = forms.ModelChoiceField(queryset=Centro.objects.all(), label=_('Centro'), widget=forms.Select)
+
+

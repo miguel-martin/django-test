@@ -17,7 +17,11 @@
            	</tr>
            </thead>
          {% for e in entregas %}
-             <tr>
+           {% if forloop.last %}
+             <tr class="last">
+           {% else %}
+             <tr class="notlast">
+           {% endif %}
               <td>
                 <a href="{% url 'list_entrega' e.tid %}"><i class="far fa-eye"></i>
                 <a href="{% url 'edit_create_entrega' e.tid %}"><i class="far fa-edit"></i>

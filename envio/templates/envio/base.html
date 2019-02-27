@@ -14,8 +14,10 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   {% load static %}
-  <link rel="stylesheet" type="text/css" href="{% static 'envio/style.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'envio/css/style.css' %}">
   <script type="text/javascript" src="{% static 'envio/js/envio.js' %}"></script>
+  {% block headerextras %}
+  {% endblock %}
 </head>
 <body>
 

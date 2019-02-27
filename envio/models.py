@@ -100,7 +100,7 @@ class Persona(models.Model):
         """ 
         Obtiene las entregas de una persona
         """
-        return Entrega.objects.filter(matricula__persona=self) 
+        return Entrega.objects.filter(matricula__persona=self).order_by('fecha')
 
 class Matricula(models.Model):
     """ Modela las matrículas de la persona """
@@ -163,7 +163,7 @@ class Entrega(models.Model):
     tid = models.AutoField(_('Código de entrega'), primary_key=True)
     titulo = models.CharField(max_length=500)
     resumen = models.CharField(max_length=5000)
-    resumen_en = models.CharField(max_length=5000)
+    resumen_en = models.CharField(max_length=5000, null=True, blank=True)
     notas = models.CharField(max_length=5000, null=True, blank=True)
     #Todo keywords as manytomanyfield?
     #ToDo director(es)

@@ -33,6 +33,11 @@
           <th>{% trans "Entregas" %}</th>
           <td>
             {% for e in persona.get_entregas %}
+              {% if forloop.last %}
+              <div class="last">
+              {% else %}
+              <div class="notlast">
+              {% endif %}
                 <a href="{% url 'list_entrega' e.tid %}">
                   <i class="far fa-eye"></i>
                 </a> 
@@ -41,9 +46,9 @@
                 </a>
                 <a href="#" onclick="confirmar('¿Seguro que deseas borrar?','{% url 'delete_entrega' e.tid %}');">
                   <i class="fa fa-trash"></i>
-                </a> 
-                {{ e }}
-                       <br />
+                </a>
+                    {{ e }}
+                 </div>
             {% endfor %}
           </td>
         </tr>
