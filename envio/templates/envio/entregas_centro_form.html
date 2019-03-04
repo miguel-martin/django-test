@@ -18,7 +18,16 @@
             });
             // ToDo - set locale as user locale, do not hardcode!!
             $.datetimepicker.setLocale('es');
+
+            // select all checkboxes
+            $('#select_all').change(function() {
+                var checkboxes = $(this).closest('form').find(':checkbox');
+                checkboxes.prop('checked', $(this).is(':checked'));
+            });
+
         });
+
+ 
   </script>
 {% endblock %}
 
@@ -51,7 +60,7 @@
         {{ form }}
     </table>
     <input type="submit" value="Enviar">
-</form>
+
 
 
 {% if entregas %}
@@ -60,7 +69,7 @@
          <table class="table table-striped">
            <thead>
             <tr>
-              <th></th>
+              <th><input type="checkbox" id="select_all" /></th>
               <th>FECHA ENTREGA</th>
               <th>ALUMNO</th>
               <th>PLAN</th>
@@ -74,11 +83,12 @@
              <tr class="notlast">
            {% endif %}
               <td>
-                <a href="{% url 'list_entrega' e.tid %}"><i class="far fa-eye"></i>
+                <input type="checkbox" name="{{ e.tid }}" value="{{ e.tid }}"/>
+                <!--<a href="{% url 'list_entrega' e.tid %}"><i class="far fa-eye"></i>
                 <a href="{% url 'edit_create_entrega' e.tid %}"><i class="far fa-edit"></i>
                 <a href="#" onclick="confirmar('¿Seguro que deseas borrar?','{% url 'delete_entrega' e.tid %}');">
                   <i class="fa fa-trash"></i>
-                </a> 
+                </a> -->
               </td>
               <td>{{ e.fecha }}</td>
                 <td>{{ e.matricula.persona }}</td>
@@ -87,8 +97,10 @@
              </tr>
          {% endfor %}
          </table>
-     {% else %}
+{% else %}
          <p>No hay entregas que cumplan los criterios de búsqueda.</p>
-     {% endif %}
+{% endif %}
+
+</form>
 
 {% endblock %}

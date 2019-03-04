@@ -218,6 +218,10 @@ def user_view(request):
 @login_required
 def get_entregas_centro(request): 
 	""" Buscar entregas de trabajos ligados a un centro entre una fecha inicial y otra final """
+
+	if not request.user.is_staff:
+		return render(request, 'envio/index.html', {'contents': _('A esta funcionalidad solo pueden acceder los administradores'), 'titlepag': 'Gestión de Trabajos'})
+
 	form = EntregasCentroForm()
 	if request.method == 'POST':
 		# read form data and show results
