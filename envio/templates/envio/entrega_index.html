@@ -1,7 +1,8 @@
 {% extends "envio/base.html" %}
+{% load i18n %} 
 
 {% block titulo %}
-    <h1> INFORMACIÓN DE ENTREGAS </h1>
+    <h1> GESTIONAR ENTREGAS </h1>
 {% endblock %}
 
 {% block content %}
@@ -11,9 +12,10 @@
            	<tr>
               <th></th>
               <th>FECHA ENTREGA</th>
-           	  <th>ALUMNO</th>
+           	  <!--<th>ALUMNO</th>-->
            	  <th>PLAN</th>
               <th>TITULO</th>
+              <th>ESTADO</th>
            	</tr>
            </thead>
          {% for e in entregas %}
@@ -30,13 +32,25 @@
                 </a> 
               </td>
               <td>{{ e.fecha }}</td>
-             	<td>{{ e.matricula.persona }}</td>
+             	<!--<td>{{ e.matricula.persona }}</td>-->
              	<td>{{ e.matricula.plan }}</td>
               <td>{{ e.titulo }}</td>
+              <td>
+                <!--{{ e.get_estado_display }}-->
+                <i class="fa fa-dot-circle status-{{ e.estado}}"></i>
+              </td>
              </tr>
          {% endfor %}
          </table>
      {% else %}
          <p>No hay entregas en la base de datos.</p>
      {% endif %}
+
+     <div id="infoestados">
+         <span style="font-weight:bold">{% trans 'Información de estados' %}</span><br />
+         <i class="fa fa-dot-circle status-0"></i> {% trans 'Sin confirmar: entrega pendiente de confirmar por alumno' %}<br />
+         <i class="fa fa-dot-circle status-1"></i> {% trans 'Confirmado: entrega pendiente de confirmar por Tribunal/Secreataría' %}<br />
+         <i class="fa fa-dot-circle status-2"></i> {% trans 'Validado: entrega confirmada por Secretaría' %}<br />
+         <i class="fa fa-dot-circle status-3"></i> {% trans 'En Zaguan: trabajo disponible en el Repositorio' %}<br />
+     </div>
 {% endblock %}

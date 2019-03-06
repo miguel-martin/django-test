@@ -1,7 +1,8 @@
 {% extends "envio/base.html" %}
+{% load i18n %} 
 
 {% block titulo %}
-    <h1> AÑADIR / MODIFICAR ENTREGA </h1>
+    <h1> {% trans 'AÑADIR / MODIFICAR ENTREGA' %} </h1>
 {% endblock %}
 
 {% if form.errors %}
@@ -22,18 +23,19 @@
 {% endif %}
 
 {% block content %}
-<h3>Recuerda que únicamente se considerará como válida la última entrega realizada y que esté dentro del Plazo de depósito establecido en tu Centro</h3><br />
+<!--<h3>Recuerda que únicamente se considerará como válida la última entrega realizada y que esté dentro del Plazo de depósito establecido en tu Centro</h3><br />-->
 
 <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <table id="form-entrega" class="table">
         {{ form.as_table }}
     </table>
-    <input type="submit" value="Enviar">
+    <input id="save-button" type="submit" name="save" value="{% trans 'GUARDAR' %}">
+    <input id="save-and-confirm-button" type="submit" name="save-and-confirm" value="{% trans 'GUARDAR Y CONFIRMAR' %}">
 </form>
 
 <script type="text/javascript" >
-    document.querySelector("#toggleTermsAndConditions").addEventListener("click", function(){
+document.querySelector("#toggleTermsAndConditions").addEventListener("click", function(){
         document.querySelector("#termsandconditions").style.display = "block";
         document.querySelector("#termsandconditions").innerHTML = "<h3>Términos de uso</h3><br /><p>El depositario del presente trabajo en este servicio declara bajo su responsabilidad y en aplicación de lo dispuesto en el art.14 (Derechos de autor) del Acuerdo de 11 de Septiembre de 2014, del Consejo de Gobierno, por el que se aprueba el <a href='https://zaguan.unizar.es/record/30630'>Reglamento de los TFG y TFM de la Universidad de Zaragoza</a>, que:</p><br /><ul><li>Es autor legítimo del trabajo que se va a depositar bajo su nombre, no habiendo utilizado fuentes distintas de las citadas debidamente en el mismo.</li><li>Cuenta con la autorización y total conformidad de cualquier otro/s coautor/es y director/es, para depositarlo.</li><li>Caso de que el trabajo sea depositado de nuevo por otro coautor, se dará por válido el primero en ser depositado, procediendo a la eliminación del más reciente.</li><li>El trabajo que deposita en el Repositorio es copia fiel y exacta del presentado a evaluación para la obtención de la licenciatura/diplomatura/grado/máster.</li><li>Asimismo, acepta la condición de que una vez depositado el trabajo no podrá hacer ninguna modificación en el mismo. Tampoco se aceptará ningún cambio en la licencia si la opción elegida es Autorizo bajo la licencia CC</li></ul><br /><p>De acuerdo con lo dispuesto en la Ley Orgánica 15/1999 de Protección de Datos de Carácter Personal, los datos reflejados en el formulario pasan a formar parte del fichero de Personal/Estudiantes/Terceros de la Universidad de Zaragagoza. El interesado podrá ejercitar los derechos de acceso, rectificación y cancelación de los datos remitiendo un escrito a la Gerencia adjuntando copia de un documento que acredite su identidad.</p>";
 });

@@ -32,7 +32,7 @@
         <tr>
           <th>{% trans "Entregas" %}</th>
           <td>
-            {% for e in persona.get_entregas %}
+            <!--{% for e in persona.get_entregas %}
               {% if forloop.last %}
               <div class="last">
               {% else %}
@@ -49,7 +49,8 @@
                 </a>
                     {{ e }}
                  </div>
-            {% endfor %}
+            {% endfor %}-->
+            <a href="{% url 'list_all_entregas' %}">{% trans "Gestionar entregas" %}</a>
           </td>
         </tr>
     </tbody>

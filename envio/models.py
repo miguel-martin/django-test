@@ -160,6 +160,18 @@ class Entrega(models.Model):
         (1, _('Autoriza consulta pública')),
     )
 
+    # La entrega pasará por varios estados
+    # Al depositar -> estado 0
+    # Al confirmarla el alumno -> estado 1
+    # Al validarla Secretaría/Tribunal -> estado 2
+    # Al pasarla a ZAGUAN -> estado 3
+    ESTADOS_CHOICES = (
+        (0, _('Sin confirmar')),
+        (1, _('Confirmada')),
+        (2, _('Validada')),
+        (3, _('Pasada a Zaguan')),
+    )
+
     tid = models.AutoField(_('Código de entrega'), primary_key=True)
     titulo = models.CharField(max_length=500)
     resumen = models.CharField(max_length=5000)
@@ -179,6 +191,7 @@ class Entrega(models.Model):
     # ficheroprivado = PrivateFileField("Fichero_privado", null=True, blank=True, upload_subfolder=user_private_upload_path)
     # refer to https://github.com/edoburu/django-private-storage
     entrega_material_adicional = models.BooleanField(default=False)
+    estado = models.IntegerField(choices=ESTADOS_CHOICES, default=0)
     
     def __str__(self):
         return(_("{} - Entrega {} del alumno {}").format(self.fecha, self.tid, self.matricula.persona))

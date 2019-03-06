@@ -163,13 +163,36 @@ def delete_Entrega(request, pk):
 
 
 @login_required
+def can_confirm_more_submissions(request):
+	""" Returns True if user can confirm submission """
+	#cuantos = Entrega.objects.filter(matricula__persona__user=request.user).filter(estado__gte=1).count()
+	#return render(request, 'envio/base.html', {'avisos': cuantos})
+	try:
+		# FIXME! Comprobar si son de la misma matricula o de distintas!!
+		return Entrega.objects.filter(matricula__persona__user=request.user).filter(estado__gte=1).count() == 0
+	except:
+		print(_("Error al determinar si puede o no confirmar entregas."))
+		return False
+
+@login_required
 def edit_or_create_Entrega(request, pk=None):
 	""" Shows the form to create/edit Entrega's """
+
 	if request.method == "POST" and not pk:
 		# create form instance and populate it with data from the request
 		form = EntregaForm(request.POST, request.FILES)
 		if form.is_valid():
 			nueva_entrega = form.save()
+			if 'save-and-confirm' in request.POST:
+				if can_confirm_more_submissions(request):
+					# the user pressed "Save and confirm" button, 
+					# and can confirm this submission
+					# so change the Entrega status
+					edit_entrega.estado = 1
+					edit_entrega.save()
+				else:
+					return render(request, 'envio/base.html', {'avisos': _("Ya has confirmado otra entrega. No puedes confirmar más entregas.")})
+
 			return HttpResponseRedirect(reverse('list_all_entregas'))
 	elif request.method == "POST" and pk:
 		# create form instance and populate it with data from the request AND the existing Entrega
@@ -180,6 +203,16 @@ def edit_or_create_Entrega(request, pk=None):
 			form = EntregaForm(request.POST, request.FILES, instance=e)
 			if form.is_valid():
 				edit_entrega = form.save()
+				if 'save-and-confirm' in request.POST:
+					if can_confirm_more_submissions(request):
+						# the user pressed "Save and confirm" button, 
+						# and can confirm this submission
+						# so change the status
+						edit_entrega.estado = 1
+						edit_entrega.save()
+					else:
+						return render(request, 'envio/base.html', {'avisos': _("Ya has confirmado otra entrega. No puedes confirmar más entregas.")})
+
 				return HttpResponseRedirect(reverse('list_all_entregas'))
 	elif not pk:
 		# if a GET (or any other method) and no pk is provided, we'll create a blank form
@@ -212,7 +245,6 @@ def user_view(request):
     """ Muestra la información del usuario """
     persona = get_object_or_404(Persona, user=request.user)
     return render(request, 'envio/persona_detail.html', {'persona': persona})	
-
 
 #ToDo must be staff, not just logged in!
 @login_required
@@ -247,6 +279,54 @@ def get_entregas_centro(request):
 				return render(request, 'envio/entregas_centro_form.html', {'form': form, 'entregas': entregas})  
 
 	return render(request, 'envio/entregas_centro_form.html', {'form': form})
+
+
+# ToDo TERMINAR
+def entrega_to_marcxml(entrega):
+    """ Genera una salida en MARCXML a partir de una entrega """
+
+    output = "<record>"
+    
+    # 037
+    codigo = "TAZ-"
+    try:
+        if entrega.matricula.plan.estudio.tipo == 5:
+            codigo += "TFG-"
+        elif entrega.matricula.plan.estudio.tipo == 6:
+            codigo += "TFM-"
+
+        codigo += str(entrega.matricula.curso) + "-"
+        codigo += str(entrega.pk)
+    except:
+        print("Unexpected error:", sys.exc_info()[0])
+        raise
+
+    output += '<datafield tag="037"><subfield code="a">%s</subfield></datafield>' %codigo
+
+    # 260
+    output += '<datafield tag="260"><subfield code="a">Zaragoza/subfield><subfield code="b">Universidad de Zaragoza/subfield><subfield code="c">%s</subfield></datafield>' %(str(entrega.matricula.curso))
+ 
+    # 041
+
+    # 100
+    try:
+        author = entrega.matricula.persona.user.last_name + ", " + entrega.matricula.persona.user.first_name
+        output += '<datafield tag="100"><subfield code="a">%s</subfield></datafield>' %author
+    except:
+        print("Unexpected error:", sys.exc_info()[0])
+        raise
+
+   # 245
+    try:
+        output += '<datafield tag="245"><subfield code="a">' + entrega.titulo + '</subfield></datafield>'
+    except:
+    	print("Unexpected error:", sys.exc_info()[0])
+    	raise
+    # 242
+    
+    output += "</record>" 
+
+    return output
 
 
 
