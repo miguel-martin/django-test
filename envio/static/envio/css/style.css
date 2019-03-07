@@ -19,7 +19,5 @@
 
 #toggleTermsAndConditions {background:none!important;/*color:inherit;*/ color:blue;border:none; padding:0!important;font: inherit;cursor: pointer;}
 
-.status-0{color:#777;}
-.status-1{color:#F00;}
-.status-2{color:#0F0;}
-.status-3{color:#00F;}
+#infoestados {margin-top:50px;margin-bottom:50px;}
+#infoestados > p {margin-left:15px;}

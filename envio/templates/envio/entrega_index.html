@@ -26,9 +26,11 @@
            {% endif %}
               <td>
                 <a href="{% url 'list_entrega' e.tid %}"><i class="far fa-eye"></i>
-                <a href="{% url 'edit_create_entrega' e.tid %}"><i class="far fa-edit"></i>
-                <a href="#" onclick="confirmar('¿Seguro que deseas borrar?','{% url 'delete_entrega' e.tid %}');">
+                {% if e.estado == 0 %}
+                  <a href="{% url 'edit_create_entrega' e.tid %}"><i class="far fa-edit"></i>
+                  <a href="#" onclick="confirmar('¿Seguro que deseas borrar?','{% url 'delete_entrega' e.tid %}');">
                   <i class="fa fa-trash"></i>
+                {% endif %}
                 </a> 
               </td>
               <td>{{ e.fecha }}</td>
@@ -37,7 +39,13 @@
               <td>{{ e.titulo }}</td>
               <td>
                 <!--{{ e.get_estado_display }}-->
-                <i class="fa fa-dot-circle status-{{ e.estado}}"></i>
+                <!-- not very elegant implementation of range in tpls. refer to https://stackoverflow.com/questions/1107737/numeric-for-loop-in-django-templates -->
+                <i class="fa fa-dot-circle"></i> 
+                {% with ''|center:e.estado as range %}
+                    {% for _ in range %}
+                       <i class="fa fa-dot-circle"></i> 
+                    {% endfor %}
+                {% endwith %}
               </td>
              </tr>
          {% endfor %}
@@ -48,9 +56,11 @@
 
      <div id="infoestados">
          <span style="font-weight:bold">{% trans 'Información de estados' %}</span><br />
-         <i class="fa fa-dot-circle status-0"></i> {% trans 'Sin confirmar: entrega pendiente de confirmar por alumno' %}<br />
-         <i class="fa fa-dot-circle status-1"></i> {% trans 'Confirmado: entrega pendiente de confirmar por Tribunal/Secreataría' %}<br />
-         <i class="fa fa-dot-circle status-2"></i> {% trans 'Validado: entrega confirmada por Secretaría' %}<br />
-         <i class="fa fa-dot-circle status-3"></i> {% trans 'En Zaguan: trabajo disponible en el Repositorio' %}<br />
+         <p>
+          <i class="fa fa-dot-circle"></i> {% trans 'Sin confirmar: entrega pendiente de confirmar por alumno' %}<br />
+          <i class="fa fa-dot-circle"></i><i class="fa fa-dot-circle"></i> {% trans 'Confirmado: entrega pendiente de confirmar por Tribunal/Secreataría' %}<br />
+          <i class="fa fa-dot-circle"></i><i class="fa fa-dot-circle"></i><i class="fa fa-dot-circle"></i> {% trans 'Validado: entrega confirmada por Secretaría' %}<br />
+          <i class="fa fa-dot-circle"></i><i class="fa fa-dot-circle"></i><i class="fa fa-dot-circle"></i><i class="fa fa-dot-circle"></i> {% trans 'En Zaguan: trabajo disponible en el Repositorio' %}<br />
+        </p>
      </div>
 {% endblock %}

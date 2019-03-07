@@ -9,6 +9,7 @@ from django.db import transaction
 from django.contrib.auth import authenticate, login, logout
 from django.utils.translation import gettext as _
 from private_storage.views import PrivateStorageDetailView
+from django.contrib import messages
 
 
 def index(request):
@@ -158,21 +159,26 @@ def delete_Entrega(request, pk):
 	if not e.matricula.persona.user == request.user:
 		return render(request, 'envio/base.html', {'avisos': _("Solo puedes borrar tus propias Entregas")})
 	# if Entrega exists and belongs to the user...
-	e.delete()
+	# and Entrega is in status 0
+	if e.estado == 0:
+		e.delete()
+		messages.success(request, 'Entrega borrada')
+	else:
+		messages.error(request, _('No puede borrar una entrega que ya está confirmada'))   
 	return HttpResponseRedirect(reverse('list_all_entregas'))
 
 
 @login_required
-def can_confirm_more_submissions(request):
+def can_confirm_more_submissions(request, matricula):
 	""" Returns True if user can confirm submission """
-	#cuantos = Entrega.objects.filter(matricula__persona__user=request.user).filter(estado__gte=1).count()
-	#return render(request, 'envio/base.html', {'avisos': cuantos})
+	if not matricula:
+		return False
 	try:
-		# FIXME! Comprobar si son de la misma matricula o de distintas!!
-		return Entrega.objects.filter(matricula__persona__user=request.user).filter(estado__gte=1).count() == 0
+		return Entrega.objects.filter(matricula=matricula).filter(matricula__persona__user=request.user).filter(estado__gte=1).count() == 0
 	except:
 		print(_("Error al determinar si puede o no confirmar entregas."))
 		return False
+
 
 @login_required
 def edit_or_create_Entrega(request, pk=None):
@@ -183,35 +189,44 @@ def edit_or_create_Entrega(request, pk=None):
 		form = EntregaForm(request.POST, request.FILES)
 		if form.is_valid():
 			nueva_entrega = form.save()
+			if 'save' in request.POST:
+				messages.success(request, _('Se ha guardado tu Entrega'))
 			if 'save-and-confirm' in request.POST:
-				if can_confirm_more_submissions(request):
+				if can_confirm_more_submissions(request, nueva_entrega.matricula):
 					# the user pressed "Save and confirm" button, 
 					# and can confirm this submission
 					# so change the Entrega status
 					edit_entrega.estado = 1
 					edit_entrega.save()
+					messages.success(request, _('Se ha cambiado el estado de tu Entrega a CONFIRMADO'))
 				else:
-					return render(request, 'envio/base.html', {'avisos': _("Ya has confirmado otra entrega. No puedes confirmar más entregas.")})
-
+					messages.error(request, _('Ya has confirmado otra Entrega. No puedes confirmar más entregas.'))
 			return HttpResponseRedirect(reverse('list_all_entregas'))
 	elif request.method == "POST" and pk:
 		# create form instance and populate it with data from the request AND the existing Entrega
 		e = get_object_or_404(Entrega,pk=pk)
 		if not e.matricula.persona.user==request.user:
-			return render(request, 'envio/base.html', {'avisos': _("Solo puedes editar tus propias Entregas")})
+			messages.error(request, _('Solo puedes editar tus propias Entregas'))
+			return HttpResponseRedirect(reverse('list_all_entregas'))
+		if e.estado != 0:
+			messages.error(request, _('No puedes editar Entregas que ya están confirmadas'))
+			return HttpResponseRedirect(reverse('list_all_entregas'))
 		else:
 			form = EntregaForm(request.POST, request.FILES, instance=e)
 			if form.is_valid():
 				edit_entrega = form.save()
+				if 'save' in request.POST:
+					messages.success(request, 'Se ha guardado tu depósito.')
 				if 'save-and-confirm' in request.POST:
-					if can_confirm_more_submissions(request):
+					if can_confirm_more_submissions(request, edit_entrega.matricula):
 						# the user pressed "Save and confirm" button, 
 						# and can confirm this submission
 						# so change the status
 						edit_entrega.estado = 1
 						edit_entrega.save()
+						messages.success(request, _('Se ha cambiado el estado de tu depósito a CONFIRMADO'))
 					else:
-						return render(request, 'envio/base.html', {'avisos': _("Ya has confirmado otra entrega. No puedes confirmar más entregas.")})
+						messages.error(request, _('Ya has confirmado otra Entrega. No puedes confirmar más entregas.'))
 
 				return HttpResponseRedirect(reverse('list_all_entregas'))
 	elif not pk:
@@ -233,10 +248,14 @@ def edit_or_create_Entrega(request, pk=None):
 		# entrega object value, if it exists and it belongs to the user
 		e = get_object_or_404(Entrega,pk=pk)
 		if not e.matricula.persona.user==request.user:
-			return render(request, 'envio/base.html', {'avisos': _("Solo puedes editar tus propias Entregas")})
-		else:
-			form = EntregaForm(instance=e)
+			messages.error(request, _('Solo puedes editar tus propias Entregas'))
+			return HttpResponseRedirect(reverse('list_all_entregas'))
+		if e.estado != 0:
+			messages.error(request, _('No puedes editar Entregas que ya están confirmadas'))
+			return HttpResponseRedirect(reverse('list_all_entregas'))
+		form = EntregaForm(instance=e)
 
+	messages.info(request, _('Cuando estés seguro de que tu Entrega está completa, pulsa GUARDAR Y CONFIRMAR. Si aún no deseas confirmarla, pulsa GUARDAR.'))
 	return render(request, 'envio/entrega_form.html', {'form': form})
 
 

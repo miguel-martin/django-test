@@ -178,3 +178,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # For private storage. Refer to https://github.com/edoburu/django-private-storage
 PRIVATE_STORAGE_ROOT = 'private-media/'
 PRIVATE_STORAGE_AUTH_FUNCTION = 'private_storage.permissions.allow_staff'
+
+# Set message level to DEBUG
+MESSAGE_LEVEL = 10  # DEBUG (refer to https://simpleisbetterthancomplex.com/tips/2016/09/06/django-tip-14-messages-framework.html)

@@ -5,6 +5,7 @@
     <h1> {% trans 'AÑADIR / MODIFICAR ENTREGA' %} </h1>
 {% endblock %}
 
+
 {% if form.errors %}
     {% block avisos %}
         {% for field in form %}
@@ -25,7 +26,7 @@
 {% block content %}
 <!--<h3>Recuerda que únicamente se considerará como válida la última entrega realizada y que esté dentro del Plazo de depósito establecido en tu Centro</h3><br />-->
 
-<form action="" method="post" enctype="multipart/form-data">
+<form action="" method="post" enctype="multipart/form-data" onsubmit="return confirm('¿Estás seguro? Esta acción no se puede deshacer');">
     {% csrf_token %}
     <table id="form-entrega" class="table">
         {{ form.as_table }}
