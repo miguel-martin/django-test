@@ -12,3 +12,4 @@ Emplea:
 * Django private storage https://github.com/edoburu/django-private-storage
 * (FOR DEBUG) https://django-debug-toolbar.readthedocs.io/en/latest/installation.html
 
+NO USAR, ES SOLO UN TEST!!
